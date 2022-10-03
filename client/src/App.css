@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Neucha&display=swap');
+
+:root {
+  --line-height: 22px;
+  --hidden-background: rgba(0, 0, 0, .7);
+  --linear-background: linear-gradient(55deg, rgba(0,92,246,1) 8%, rgba(255,0,249,1) 85%);
+  --linear-background-reversed: linear-gradient(to right, rgba(0,92,246,1) 8%, rgba(255,0,249,1) 85%);
+}
+
+body:has(.modal) > #root, body:has(.hide-background) > #root,  body:has(.input__box:focus) > #root{
+  /* disable scrolling if a modal is shown */
+  overflow-y: hidden;
+  pointer-events: none;
+}
+
+.App {
+  overflow-x: hidden;
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #2f74c0;
+  font-family: "Neucha", cursive;
+}
+
+@media (max-width: 800px) {
+  .heading {
+    margin: 15px 0;
+    font-size: 35px;
+  }
+}
