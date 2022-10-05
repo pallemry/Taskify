@@ -7,10 +7,19 @@
   --linear-background-reversed: linear-gradient(to right, rgba(0,92,246,1) 8%, rgba(255,0,249,1) 85%);
 }
 
+
+#root {
+  overflow-x: hidden;
+}
+
 body:has(.modal) > #root, body:has(.hide-background) > #root,  body:has(.input__box:focus) > #root{
   /* disable scrolling if a modal is shown */
   overflow-y: hidden;
   pointer-events: none;
+}
+
+.App:has(.whitebg) {
+  background: #fff;
 }
 
 .App {
