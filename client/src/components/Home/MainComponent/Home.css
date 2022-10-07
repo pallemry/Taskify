@@ -5,58 +5,5 @@
     justify-content: center;
     flex-direction: column;
     width: 100%;
-    background: red;
-}
-.home__header {
-    cursor: text;
-    font-family: "Source Code Pro", monospace;
-    font-size: 10em;
-    position: relative;
-}
-
-.home__header::after,
-.home__header::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-}
-
-.cursor-after::after {
-    background: black;
-    width: .1em;
-    animation: typewriter calc(.2s * var(--length)) forwards, blink 1s infinite;
-}
-
-.animate-text::before {
-    
-    animation: typewriter calc(.2s * var(--length)) forwards;
-}
-
-.animate-text::before {
-    color: transparent;
-    background: red;
-}
-
-.animate-steps::after, .animate-steps::before {
-    animation-timing-function: steps(var(--length)), linear;
-}
-
-.home__header_hide {
-    color: transparent;
-    
-}
-
-@keyframes typewriter {
-    to { 
-        left: 100%;
-    }
-}
-
-@keyframes blink {
-    50% {
-        opacity: 0; 
-    }
+    background: white;
 }

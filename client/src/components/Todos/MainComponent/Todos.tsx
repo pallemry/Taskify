@@ -11,7 +11,6 @@ const Todos = ({ }: Props) => {
   const [todos, setTodos] = useLocalStorage<Todo[]>('todos', []);
 
   useEffect(() => {
-    console.log('todos updated', todos)
     setTodos([...todos]);
   }, [todos.length])
 

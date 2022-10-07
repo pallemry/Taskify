@@ -7,7 +7,6 @@ import { ROUTES } from './routes/routes';
 import NotFound from './components/NotFound/NotFound';
 import Home from './components/Home/MainComponent/Home';
 
-const withNavBar = (element: JSX.Element) => <><NavBar />{element}</>
 const App: React.FC = () => {
 
   return (

@@ -18,7 +18,6 @@ export const removeElement = <T>(arr: T[], value: T) => {
     if (index > -1) {
       arr.splice(index, 1);
     }
-    console.log('from removeElement', arr)
     return arr;
 }
 
