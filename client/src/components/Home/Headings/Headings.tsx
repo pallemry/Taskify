@@ -73,11 +73,11 @@ export default function Headings(props: Props) {
         <>
             <div ref={headersRef} className='home_headers_wrapper'>
                 {
-                    headers.map(header => {
-                        return <>
+                    headers.map((header, index) => {
+                        return <div key={index}>
                             <span className={getAnimation(header)} style={getLength(header)} onAnimationEnd={handleAnimationEnd}>{header}</span>
                             <br />
-                        </>
+                        </div>
                     })
                 }
             </div>
