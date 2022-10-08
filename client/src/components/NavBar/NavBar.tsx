@@ -9,10 +9,10 @@ type Props = {}
 const NavBar = (props: Props) => {
   return (
     <>
-    <div className="navbar">
-      <Link to={ROUTES.default} className="heading">Taskify</Link>
+    <nav className="navbar">
+      <Link to={ROUTES.default} className="heading">Home</Link>
       <Link to={ROUTES.todos} className='nav-item'>Tasks</Link>
-    </div>
+    </nav>
     <Outlet />
     </>
   )

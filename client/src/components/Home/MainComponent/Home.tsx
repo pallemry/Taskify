@@ -7,13 +7,13 @@ type Props = {}
 
 export default function Home({ }: Props) {
 
-
-  
   return (
     <div id='home' className='whitebg'>
       <Headings 
-        headers={['Build.', 'Develop.', 'Think again.']}
+        headers={[ 'Build.', 'Develop.', 'Think.']}
+        className='headings'
       />
+      <button>faw</button>
     </div>
   )
 }

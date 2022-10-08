@@ -1,9 +1,19 @@
+.headings {
+    color: white;
+    mix-blend-mode: difference;
+}
+
 #home {
+    background-image: url('../../../images/home.gif');
+    background-repeat: repeat-x;
+    background-color: rgb(38, 37, 37);
+
     position: relative;
     overflow-x: hidden;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
     width: 100%;
-    background: white;
+    min-height: 100vh;
+    
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }

@@ -1,37 +1,38 @@
+#headers-wrapper {
+    height: fit-content;
+}
+
 .home__header {
+    width: fit-content;
+    overflow-x: hidden;
+    white-space: nowrap;
     cursor: text;
     font-family: "Source Code Pro", monospace;
     font-size: 10em;
     position: relative;
 }
 
-.home__header::after,
-.home__header::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+.header-wrapper {
+    display: flex;
+    flex-direction: row;
 }
 
-.cursor-after::after {
-    background: black;
-    width: .1em;
-    animation: typewriter calc(.2s * var(--length)) forwards, blink 1s infinite;
+.cursor-after + #cursor {
+    height: var(--height);
+    width: 1em;
+    background-color: currentColor;
+    animation: blink 1s steps(2) infinite;
 }
 
-.animate-text::before {
-    
-    animation: typewriter calc(.2s * var(--length)) forwards;
+.animate-text {
+    animation: advance calc(.2s * var(--length)) forwards;
 }
 
-.animate-text::before {
-    color: transparent;
-    background: red;
+.animate-text + #cursor {
+    animation: none;
 }
 
-.animate-steps::after, .animate-steps::before {
+.animate-steps {
     animation-timing-function: steps(var(--length)), linear;
 }
 
@@ -40,14 +41,23 @@
     
 }
 
-@keyframes typewriter {
+@keyframes advance-cursor {
     to { 
-        left: 100%;
+        right: 100%;
+    }
+}
+
+@keyframes advance {
+    from { 
+        width: 0px
+    }
+    to {
+        width: calc(var(--width));
     }
 }
 
 @keyframes blink {
-    50% {
-        opacity: 0; 
+    0% {
+        visibility: hidden;
     }
 }

@@ -4,6 +4,7 @@ import { Todo } from '../../../Models/Todo';
 import { uuidv4 } from '../../../utils/utils';
 import CardList from '../CrardList/CardList';
 import InputField from '../InputField/InputField';
+import './Todos.css'
 
 type Props = {}
 
@@ -29,10 +30,10 @@ const Todos = ({ }: Props) => {
   }
 
   return (
-    <>
+    <div id='todos'>
       <InputField handleAdd={handleAdd} clearTodos={clearTodos} />
       <CardList todos={todos} setTodos={setTodos} />
-    </>
+    </div>
   );
 }
 
