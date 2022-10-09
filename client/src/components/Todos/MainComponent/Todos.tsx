@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import React, { useEffect } from 'react'
 import useLocalStorage from '../../../hooks/useLocalStorage';
 import { Todo } from '../../../Models/Todo';
@@ -30,10 +31,17 @@ const Todos = ({ }: Props) => {
   }
 
   return (
-    <div id='todos'>
+    <motion.div 
+    id="todos"
+    initial={{width: 0}}
+    animate={{width: '90%'}}
+    exit={{x: window.innerWidth, transition: {duration: 0.1}}}
+    >
+      {/* Footer */}
+      <div style={{margin: '15px 0px'}}></div>
       <InputField handleAdd={handleAdd} clearTodos={clearTodos} />
       <CardList todos={todos} setTodos={setTodos} />
-    </div>
+    </motion.div>
   );
 }
 

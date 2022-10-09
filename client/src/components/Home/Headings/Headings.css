@@ -1,15 +1,18 @@
 #headers-wrapper {
     height: fit-content;
+    min-width: var(--min-width);
+    
 }
 
 .home__header {
     width: fit-content;
     overflow-x: hidden;
-    white-space: nowrap;
+    white-space: pre;
     cursor: text;
     font-family: "Source Code Pro", monospace;
     font-size: 10em;
     position: relative;
+    border: 1px red;
 }
 
 .header-wrapper {
@@ -25,7 +28,7 @@
 }
 
 .animate-text {
-    animation: advance calc(.2s * var(--length)) forwards;
+    animation: advance calc(.2s * var(--length) * var(--animation-speed)) forwards;
 }
 
 .animate-text + #cursor {
@@ -36,7 +39,7 @@
     animation-timing-function: steps(var(--length)), linear;
 }
 
-.home__header_hide {
+.home__header_hide, .home__header_hide::selection {
     color: transparent;
     
 }

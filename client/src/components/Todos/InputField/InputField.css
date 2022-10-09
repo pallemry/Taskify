@@ -3,12 +3,12 @@
 :root {
     --input-radius: 50px;
 }
-
+/* 
 .container {
     width: 90%;
     display: flex;
     align-items: center;
-}
+} */
 
 .input {
     width: 100%;
@@ -31,8 +31,11 @@
     cursor: text;
 }
 
-.input__box:focus {
+.input:has(.input__box:focus) {
     pointer-events: all;
+}
+
+.input__box:focus {
     box-shadow: 0 0 10px 10000px var(--hidden-background);
     transition: 0.15s all;
     outline: none;

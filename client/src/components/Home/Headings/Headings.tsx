@@ -2,19 +2,22 @@ import React, { createRef, RefObject, useEffect, useLayoutEffect, useRef, useSta
 import './Headings.css'
 
 type Props = {
-    headers?: string[];
+    labels?: string[];
     animationSmoothed?: boolean;
+    animationSpeed?: number;
     className?: string;
+    showCurosorAfterDoneType?: boolean;
 }
 
 export default function Headings(props: Props) {
     const [headers, setHeaders] = useState<string[]>(getHeaders())
     const [queued, setQueued] = useState<string[]>([]);
+    const [speed, setSpeed] = useState(props.animationSpeed ?? 1);
     const [animationStarted, setAnimationStarted] = useState(false);
     const [headersRefs, setHeadersRefs] = useState<React.RefObject<HTMLElement>[]>([]);
     const [smoothAnimation, setSmoothAnimation] = useState(props.animationSmoothed ?? false);
 
-    useEffect(() => { setHeaders(getHeaders()) }, [props.headers])
+    useEffect(() => { setHeaders(getHeaders()) }, [props.labels])
 
     useEffect(() => {
         if (!animationStarted && queued.length === 0) {
@@ -46,10 +49,15 @@ export default function Headings(props: Props) {
             }
             current?.style.setProperty('--length', headerWordLength);
         })
-        const style = headersRefs[0].current?.parentElement?.style;
+        const headerRef = headersRefs[0].current?.parentElement;
+        const style = headerRef?.style;
         const minWidth = Math.max(...widths);
-        if (style && style.minWidth === '')
-            style.minWidth = minWidth + 'px';
+        const cursorWidth = headerRef?.lastElementChild?.querySelector('#cursor')?.getBoundingClientRect().width || 0;
+        const newMinWidth = minWidth + cursorWidth
+        if (style && style.getPropertyValue('--min-width') === '') {
+            style.setProperty('--min-width', `${newMinWidth}px`);
+            style.setProperty('--animation-speed', `${1/speed}`);
+        }
     });
 
     const handleAnimationEnd = (e: React.AnimationEvent) => {
@@ -67,8 +75,7 @@ export default function Headings(props: Props) {
             result += 'home__header_hide '
 
         }
-
-        else if (headers[headers.length - 1] === header) {
+        else if (headers[headers.length - 1] === header && props.showCurosorAfterDoneType === true) {
             result += 'cursor-after '
         }
         if (!smoothAnimation) {
@@ -107,6 +114,6 @@ export default function Headings(props: Props) {
     }
 
     function getHeaders(): string[] | (() => string[]) {
-        return props.headers ?? [];
+        return props.labels ?? [];
     }
 }

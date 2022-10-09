@@ -37,7 +37,7 @@ const InputField: React.FC<InputFieldProps> = (props) => {
     }
 
     return (
-        <div className="container">
+        <>
             <form className="input">
                 <div style={{width: '100%', position: 'relative', display: 'flex', alignItems: 'center'}}>
                 <input
@@ -59,7 +59,7 @@ const InputField: React.FC<InputFieldProps> = (props) => {
                 onClosed={onResetModalClosed}
                 message="Are you sure you want to delete all notes? This action cannot be undone!"></Modal>
             }
-        </div>
+        </>
     )
 }
 
