@@ -2,54 +2,19 @@ import { motion } from 'framer-motion'
 import React, { useRef, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { ROUTES } from '../../../routes/routes';
-import { checkLowercase, checkNumber, checkUppercase } from '../../../utils/utils';
 import Headings from '../../Home/Headings/Headings';
 import './Login.css'
 import $ from 'jquery'
-import { config } from '../../../config';
+import Password from '../Password/PasswordComponent/Password';
+import PasswordErrorList from '../Password/PasswordErrorList/PasswordErrorList';
+import PasswordInputField from '../Password/PasswordInputField/PasswordInputField';
 
 type Props = React.PropsWithChildren & {
 }
 
-interface CheckedError {
-    message: string;
-    isActive: boolean;
-}
-
-interface PasswordCheckedErrors {
-    [id: string]: CheckedError;
-}
-
 export default function Login({ }: Props) {
-    const [passwordErrors, setPasswordErrors] = useState<PasswordCheckedErrors>({
-        length: {
-            message: 'Must be at least ' + config.maxPasswordLength + ' letters',
-            isActive: true
-        },
-        digit: {
-            message: 'Must have at least 1 digit letter',
-            isActive: true
-        },
-        capital: {
-            message: 'Must have at least 1 capital letter',
-            isActive: true
-        },
-        lowercase: {
-            message: 'Must have at least 1 lowercase letter',
-            isActive: true
-        }
-    });
     const ref = useRef<HTMLDivElement>(null);
     const formRef = useRef<HTMLFormElement>(null);
-
-    function checkPassword(e: React.ChangeEvent<HTMLInputElement>) {
-        const password = ((e.currentTarget) as HTMLInputElement).value;
-        passwordErrors['length'].isActive = (password.length < config.maxPasswordLength);
-        passwordErrors['capital'].isActive = !checkUppercase(password);
-        passwordErrors['lowercase'].isActive = !checkLowercase(password);
-        passwordErrors['digit'].isActive = !checkNumber(password);
-        setPasswordErrors({...passwordErrors})
-    }
 
     function submitClick(e: React.MouseEvent<HTMLInputElement>) {
         $('.errors').css('animation', 'shake .5s infinite')
@@ -79,25 +44,12 @@ export default function Login({ }: Props) {
                     </div>
                     <div className="input-group">
                         <label htmlFor='password'> Password: </label>
-                        <input type="password" name='password'
-                            className='login__input'
-                            autoComplete='false'
-                            pattern={`(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d\\w\\W]{${config.maxPasswordLength},}`}
-                            placeholder="j0hn" required
-                            onChange={checkPassword}
-                        ></input>
+                        <Password placeholder="j0hn">
+                            <PasswordInputField placeholder="j0hn" />
+                            <PasswordErrorList />
+                        </Password>
                     </div>
-                    <ul className="errors">
-                        {
-                            Object.values(passwordErrors).map(error => {
-                                return (
-                                    <li key={error.message} className={error.isActive ? 'error-active' : 'error-non-active'}>
-                                        {error.message}
-                                    </li>
-                                )
-                            })
-                        }
-                    </ul>
+
                     <input type='submit'
                         className='submit-button'
                         value='Log in'
