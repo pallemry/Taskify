@@ -69,13 +69,14 @@ export default function Headings(props: Props) {
 
     const getAnimation = (header: string) => {
         let result = 'home__header ';
+        
         if (queued[queued.length - 1] === header) {
             result += 'cursor-after animate-text ';
         } else if (queued.some(h => h === header)) {
             result += 'home__header_hide '
 
         }
-        else if (headers[headers.length - 1] === header && props.showCurosorAfterDoneType === true) {
+        else if (headers[headers.length - 1] === header && (props.showCurosorAfterDoneType === true || props.showCurosorAfterDoneType === undefined)) {
             result += 'cursor-after '
         }
         if (!smoothAnimation) {

@@ -1,6 +1,6 @@
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { ROUTES } from '../../routes/routes'
-import Login from '../Home/Login/Login'
+import Login from '../Login/MainComponent/Login'
 import Home from '../Home/MainComponent/Home'
 import NotFound from '../NotFound/NotFound'
 import Todos from '../Todos/MainComponent/Todos'

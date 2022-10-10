@@ -32,4 +32,36 @@ export function getHeightBetweenNavbarAndScreenBottom(bottomOffset: number = 0, 
     catch { return defaultValue; }
 }
 
+/**
+ * checks whether a string contains an upper case letter
+ * @param str the string to check
+ * @returns whether the string contains an upper case letter
+ */
+export function checkUppercase(str: string): boolean {
+    for (var i=0; i<str.length; i++){
+      if (str.charAt(i) == str.charAt(i).toUpperCase() && str.charAt(i).match(/[a-z]/i)){
+        return true;
+      }
+    }
+    return false;
+};
+
+export function checkLowercase(str: string): boolean {
+    for (var i=0; i<str.length; i++){
+      if (str.charAt(i) == str.charAt(i).toLowerCase() && str.charAt(i).match(/[A-Z]/i)){
+        return true;
+      }
+    }
+    return false;
+};
+
+export function checkNumber(str: string): boolean {
+    for (var i=0; i<str.length; i++){
+      if (str.charAt(i).match(/[0-9]/i)){
+        return true;
+      }
+    }
+    return false;
+};
+
 export const uuidv4 = () => v4();
