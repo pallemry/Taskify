@@ -44,6 +44,10 @@
     
 }
 
+.center-headings {
+    justify-content: center;
+}
+
 @keyframes advance-cursor {
     to { 
         right: 100%;

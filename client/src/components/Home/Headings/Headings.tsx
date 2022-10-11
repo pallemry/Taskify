@@ -2,16 +2,46 @@ import React, { createRef, RefObject, useEffect, useLayoutEffect, useRef, useSta
 import './Headings.css'
 
 type Props = {
-    labels?: string[];
+    /**
+     * The headings, each heading represents a new line
+     */
+    labels: string[];
+    /**
+     * Wether the animtion looks smooth. In case it's false it looks as if it's being typed
+     * @default false
+     */
     animationSmoothed?: boolean;
+    /**
+     * The speed which the animtion will go in, as it's bigger the animation will animate faster
+     * @default 1
+     */
     animationSpeed?: number;
     className?: string;
-    showCurosorAfterDoneType?: boolean;
+    /**
+     * Wether to show the cursor after the animtaion has finished in all labels
+     * @note if {@link Props.showCursor showCursor} is set to flase this will not have any effect.
+     * @default false
+     */
+    showCursorAfterDoneType?: boolean;
+    /**
+     * Wether to center the text, by default it will center to the left
+     * @default
+     * false
+     */
+    centerText?: boolean;
+    /**
+     * Wether to show the cursor.
+     * @note this will override {@link Props.showCursorAfterDoneType showCursorAfterDoneType}
+     * @default true
+     */
+    showCursor?: boolean;
 }
 
 export default function Headings(props: Props) {
     const [headers, setHeaders] = useState<string[]>(getHeaders())
     const [queued, setQueued] = useState<string[]>([]);
+    const [centerText, setCenterText] = useState(props.centerText ?? false);
+    const [showCursor, setShowCursor] = useState(props.showCursor ?? true);
     const [speed, setSpeed] = useState(props.animationSpeed ?? 1);
     const [animationStarted, setAnimationStarted] = useState(false);
     const [headersRefs, setHeadersRefs] = useState<React.RefObject<HTMLElement>[]>([]);
@@ -69,15 +99,16 @@ export default function Headings(props: Props) {
 
     const getAnimation = (header: string) => {
         let result = 'home__header ';
-        
+        const cursorAfter = showCursor ? 'cursor-after ' : '';
         if (queued[queued.length - 1] === header) {
-            result += 'cursor-after animate-text ';
+            result += cursorAfter;
+            result += 'animate-text ';
         } else if (queued.some(h => h === header)) {
             result += 'home__header_hide '
 
         }
-        else if (headers[headers.length - 1] === header && (props.showCurosorAfterDoneType === true || props.showCurosorAfterDoneType === undefined)) {
-            result += 'cursor-after '
+        else if (headers[headers.length - 1] === header && (props.showCursorAfterDoneType === true || props.showCursorAfterDoneType === undefined)) {
+            result += cursorAfter;
         }
         if (!smoothAnimation) {
             result += 'animate-steps ';
@@ -92,7 +123,7 @@ export default function Headings(props: Props) {
     }
 
     return (
-        <div id='headers-wrapper' className={props.className ?? ''}>
+        <div id='headers-wrapper' className={`${props.className ?? ''}`}>
             {
                 getHeadersElements()
             }
@@ -104,7 +135,7 @@ export default function Headings(props: Props) {
         return headers.map((header, index) => {
             const ref = createRef<HTMLDivElement>();
             headersRefs.push(ref);
-            return <div ref={ref} key={index} className='header-wrapper'>
+            return <div ref={ref} key={index} className={`header-wrapper ${centerText ? 'center-headings' : ''}`}>
                 <div className={getAnimation(header)} onAnimationEnd={handleAnimationEnd}>
                     {header}
                 </div>

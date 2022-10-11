@@ -1,35 +1,43 @@
 import { motion } from 'framer-motion'
-import React, { useRef, useState } from 'react'
-import { Link } from 'react-router-dom';
-import { ROUTES } from '../../../routes/routes';
-import Headings from '../../Home/Headings/Headings';
-import './Login.css'
+import React, { useRef } from 'react'
+import { Link } from 'react-router-dom'
+import { ROUTES } from '../../routes/routes'
 import $ from 'jquery'
-import Password from '../Password/PasswordComponent/Password';
-import PasswordErrorList from '../Password/PasswordErrorList/PasswordErrorList';
-import PasswordInputField from '../Password/PasswordInputField/PasswordInputField';
+import Headings from '../Home/Headings/Headings'
+import Password from '../Login/Password/PasswordComponent/Password'
+import PasswordErrorList from '../Login/Password/PasswordErrorList/PasswordErrorList'
+import PasswordInputConfirmation from '../Login/Password/PasswordInputConfirmation/PasswordInputConfirmation'
+import PasswordInputField from '../Login/Password/PasswordInputField/PasswordInputField'
+import './Signup.css'
 
-type Props = React.PropsWithChildren & {
-}
+type Props = {}
 
-export default function Login({ }: Props) {
-    const ref = useRef<HTMLDivElement>(null);
-    const formRef = useRef<HTMLFormElement>(null);
+export default function Signup({ }: Props) {
+    const formRef = useRef<HTMLFormElement>(null)
 
     function submitClick(e: React.MouseEvent<HTMLInputElement>) {
-        $('.errors').css('animation', 'shake .5s infinite')
-        setTimeout(() => {
-            $('.errors').css('animation', '')
-        }, 500)
+        if (!formRef.current?.checkValidity()) {
+            $('.errors').css('animation', 'shake .5s infinite')
+            setTimeout(() => {
+                $('.errors').css('animation', '')
+            }, 500)
+        }
     }
 
     return (
-        <motion.div className="login-container" ref={ref}
+        <motion.div className="login-container"
             initial={{ width: 0 }}
             animate={{ width: '100%' }}
             exit={{ x: window.innerWidth, transition: { duration: 0.1 } }}>
             <div className="login-form-wrapper">
-                <Headings labels={['login-here']} className='login-header' />
+                <Headings
+                    labels={['welcome!', 'ready to start?']}
+                    className='signup-header'
+                    centerText={true}
+                    animationSmoothed={true}
+                    animationSpeed={2}
+                    showCursorAfterDoneType={false}
+                />
                 <form id='form' className="login-form" ref={formRef}>
                     <div className="input-group">
                         <label htmlFor='email'>Email: </label>
@@ -46,21 +54,21 @@ export default function Login({ }: Props) {
                         <label htmlFor='password'> Password: </label>
                         <Password placeholder="j0hn">
                             <PasswordInputField placeholder="j0hn" />
+                            <PasswordInputConfirmation />
+                            <PasswordErrorList />
                         </Password>
                     </div>
 
                     <input type='submit'
                         className='submit-button'
-                        value='Log in'
+                        value='Sign up'
                         onClick={submitClick}></input>
                 </form>
                 <div className="extra-buttons">
-                    <Link to={ROUTES.signup} className="extra-button sign-up">Sign up</Link>
+                    <Link to={ROUTES.login} className="extra-button sign-up">Log in</Link>
                     <Link to={ROUTES.forgotpassword} className="extra-button forgot-password">Forgot password</Link>
                 </div>
             </div>
         </motion.div>
     )
 }
-
-

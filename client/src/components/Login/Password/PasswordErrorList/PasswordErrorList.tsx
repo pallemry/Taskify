@@ -11,7 +11,8 @@ export default function PasswordErrorList({ }: Props) {
             {
                 Object.values(passwordErrors).map(error => {
                     return (
-                        <li key={error.message} className={`error ${error.isActive ? 'error-active' : 'error-non-active'}`}>
+                        <li key={error.message} 
+                        className={`error  ${error.isActive ? 'error-active' : 'error-non-active'}`}>
                             {error.message}
                         </li>
                     )

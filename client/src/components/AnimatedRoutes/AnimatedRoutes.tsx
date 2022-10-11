@@ -6,6 +6,7 @@ import NotFound from '../NotFound/NotFound'
 import Todos from '../Todos/MainComponent/Todos'
 
 import { AnimatePresence } from 'framer-motion'
+import Signup from '../Signup/Signup'
 
 type Props = {}
 
@@ -19,6 +20,7 @@ export default function AnimatedRoutes({ }: Props) {
                 <Route path={ROUTES.todos} element={<Todos />} />
                 <Route path={ROUTES.login} element={<Login />} />
                 <Route path={ROUTES.any} element={<NotFound />} />
+                <Route path={ROUTES.signup} element={<Signup />} />
             </Routes>
         </AnimatePresence>
     )

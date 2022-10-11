@@ -17,6 +17,12 @@ type Props = React.PropsWithChildren & {
 export interface IPasswordContext {
     passwordErrors: PasswordCheckedErrors;
     setPasswordErrors: React.Dispatch<React.SetStateAction<PasswordCheckedErrors>>;
+    password: string | null;
+    setPassword: React.Dispatch<React.SetStateAction<string | null>>;
+    placeholder: string;
+    setPlaceholder: React.Dispatch<React.SetStateAction<string>>;
+    passwordShown: boolean;
+    setPasswordShown: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export const PasswordContext = React.createContext<IPasswordContext | null>(null)
@@ -41,8 +47,15 @@ export default function Password(props: Props) {
                 isActive: true
             }
         });
+    const [password, setPassword] = useState<string | null>(null);
+    const [placeholder, setPlaceholder] = useState<string>('');
+    const [passwordShown, setPasswordShown] = useState<boolean>(false);
     return (
-        <PasswordContext.Provider value={{passwordErrors, setPasswordErrors}}>
+        <PasswordContext.Provider value={{
+            passwordShown, setPasswordShown, 
+            placeholder, setPlaceholder, 
+            passwordErrors, setPasswordErrors, 
+            password, setPassword}}>
             {
                 props.children
             }
