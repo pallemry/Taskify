@@ -5,8 +5,16 @@
     display: /* make sure everything looks good */ flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     width: 100%;
     color: white;
+    position: relative;
+}
+
+#titles > :first-child {
+    mix-blend-mode: difference;
+    font-size: 3em;
+    transform: translateX(-50%) translateY(22%);
 }
 
 .headings {

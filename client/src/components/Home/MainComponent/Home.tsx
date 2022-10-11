@@ -34,8 +34,9 @@ export default function Home({ }: Props) {
       exit={{ x: window.innerWidth, transition: { duration: 0.1 } }}
     >
       <div id='titles' ref={titlesRef}>
+        <div>The three D's:</div>
         <Headings
-          labels={['Build.', 'Develop.', 'Deploy.']}
+          labels={['Develop.', 'Deploy.', 'Debug.',]}
           className='headings'
         />
       </div>
