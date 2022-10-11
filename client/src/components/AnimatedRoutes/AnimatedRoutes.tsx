@@ -1,12 +1,13 @@
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { ROUTES } from '../../routes/routes'
-import Login from '../Login/MainComponent/Login'
-import Home from '../Home/MainComponent/Home'
-import NotFound from '../NotFound/NotFound'
-import Todos from '../Todos/MainComponent/Todos'
+import Login from '../Pages/Login/MainComponent/Login'
+import NotFound from '../Pages/NotFound/NotFound'
+import Todos from '../Pages/Todos/MainComponent/Todos'
 
 import { AnimatePresence } from 'framer-motion'
-import Signup from '../Signup/Signup'
+import Signup from '../Pages/Signup/Signup'
+import Home from '../Pages/Home/MainComponent/Home'
+import MainWindow from '../Pages/Code/MainWindow/MainWindow'
 
 type Props = {}
 
@@ -21,6 +22,9 @@ export default function AnimatedRoutes({ }: Props) {
                 <Route path={ROUTES.login} element={<Login />} />
                 <Route path={ROUTES.any} element={<NotFound />} />
                 <Route path={ROUTES.signup} element={<Signup />} />
+                <Route path={ROUTES.code}>
+                    <Route index element={<MainWindow />}></Route>
+                </Route>
             </Routes>
         </AnimatePresence>
     )

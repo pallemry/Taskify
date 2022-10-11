@@ -1,0 +1,56 @@
+/* Headings container */
+#titles {
+    background-image: url('../../../../images/home.gif');
+    background-size: cover;
+    display: /* make sure everything looks good */ flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    color: white;
+    position: relative;
+}
+
+#titles > :first-child {
+    mix-blend-mode: difference;
+    font-size: 3em;
+    transform: translateX(-50%) translateY(22%);
+}
+
+.headings {
+    mix-blend-mode: difference;
+}
+
+
+.navbar {
+    background: rgb(38, 37, 37);
+}
+
+#login__button {
+    position: absolute;
+    top: 10px;
+    right: 30px;
+    font-family: inherit;
+    font-size: x-large;
+    background: transparent;
+    color: inherit;
+    border: none;
+    mix-blend-mode: difference;
+}
+
+#login__button:hover {
+    color: rgb(230, 230, 230);
+}
+
+#home {
+    font-family: "Source Code Pro", monospace;
+    background-color: rgb(38, 37, 37);
+    position: relative;
+    overflow-x: hidden;
+    /* min-height: 100vh; */
+    width: 100vw;
+    padding-bottom: 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}

@@ -14,6 +14,8 @@ const NavBar = (props: Props) => {
       <Link to={ROUTES.default} className="heading">Home</Link>
       <Link to={ROUTES.todos} className='nav-item'>Tasks</Link>
       <Link to={ROUTES.login} className='nav-item'>Log in</Link>
+      <Link to={ROUTES.signup} className='nav-item'>Sign up</Link>
+      <Link to={ROUTES.code} className='nav-item'>Code</Link>
     </nav>
     <Outlet />
     </>
