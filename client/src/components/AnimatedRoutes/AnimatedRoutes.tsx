@@ -8,6 +8,8 @@ import { AnimatePresence } from 'framer-motion'
 import Signup from '../Pages/Signup/Signup'
 import Home from '../Pages/Home/MainComponent/Home'
 import MainWindow from '../Pages/Code/MainWindow/MainWindow'
+import { config } from '../../config'
+import Test from '../Pages/Test/Test'
 
 type Props = {}
 
@@ -25,6 +27,9 @@ export default function AnimatedRoutes({ }: Props) {
                 <Route path={ROUTES.code}>
                     <Route index element={<MainWindow />}></Route>
                 </Route>
+                {config.DEV && 
+                <Route path={ROUTES.test} element={<Test />}/>
+                }
             </Routes>
         </AnimatePresence>
     )

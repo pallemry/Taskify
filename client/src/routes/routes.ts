@@ -7,4 +7,5 @@ export const ROUTES = Object.freeze({
     signup: '/signup',
     forgotpassword: '/forgotpassword',
     code: '/code',
+    test: '/test',
 });
