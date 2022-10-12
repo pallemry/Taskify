@@ -17,10 +17,38 @@
     background-color: red;
 }
 
+.line-numbers, .line-numbers li{
+    font-size: 1em;
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+/* .line-numbers {
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.line-numbers li {
+    height: 30px;
+    text-align: end;
+    font-family: "Source Code Pro", monospace;
+}
+
 .editor {
-    font-size: 30px;
+    display: flex;
+    flex-direction: row;
+    font-size: 2em;
     height: 100%;
 }
+
+.editorText {
+    overflow: visible;
+    line-height: 30px;
+    font-size: 1em;
+    height: 100%;
+} */
 
 #console {
     height: 100%;

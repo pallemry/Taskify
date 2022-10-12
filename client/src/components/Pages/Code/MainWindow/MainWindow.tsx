@@ -1,12 +1,12 @@
-import React, { useEffect, useLayoutEffect, useRef } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import './MainWindow.css'
 import SplitPane from 'react-split-pane'
 import MultilevelMenus from '../../../MultiDropdown/MultilevelMenus/MultilevelMenu';
 import { menuItems } from '../../../../config';
-import { motion } from 'framer-motion';
 import { getHeightBetweenNavbarAndScreenBottom } from '../../../../utils/utils';
 import { MenuItem } from '../../../../MenuItem';
 import ts from 'typescript';
+import MultilineTextarea from '../MultilineTextarea/MultilineTextarea';
 
 type Props = {}
 
@@ -15,7 +15,30 @@ export default function MainWindow({ }: Props) {
     const explorerRef = useRef<HTMLDivElement>(null);
     const consoleRef = useRef<HTMLUListElement>(null);
     const ref = useRef<HTMLDivElement>(null);
+    const [saveConsole] = useState(console)
 
+    useEffect(() => {
+        console = {
+            assert: () => { },
+            clear: () => {
+                consoleRef.current!.innerHTML = '';
+            },
+            //@ts-ignore
+            Console: {},
+            log: (...args) => {
+                saveConsole.log(...args)
+                for (const arg of args) {
+                    if (typeof arg === 'object')
+                        consoleRef.current!.innerHTML += JSON.stringify(arg, null, 2) + '\n'
+                    else
+                        consoleRef.current!.innerHTML += arg + '\n';
+                }
+            }
+        }
+        return () => {
+            console = saveConsole;
+        }
+    }, [saveConsole])
 
     useLayoutEffect(() => {
         function updateHeight() {
@@ -27,33 +50,16 @@ export default function MainWindow({ }: Props) {
         }
     })
 
-    async function itemSelected(item: MenuItem) {
+
+    function itemSelected(item: MenuItem) {
         if (item.id === 2)
-            await run()
+            run()
     }
 
-    async function run() {
-        const saveConsole = console;
-        const code = new Function(ts.transpile(editorRef.current?.value ?? 'throw new Error(\'An Error occured while loading the script\')'));
-        console = {
-            assert: () => { },
-            clear: () => {
-                consoleRef.current!.innerHTML = '';
-            },
-            //@ts-ignore
-            Console: {},
-            log: (...args) => {
-                for (const arg of args) {
-                    if (typeof arg === 'object')
-                        consoleRef.current!.innerHTML += JSON.stringify(arg, null, 2) + '\n'
-                    else
-                        consoleRef.current!.innerHTML += arg + '\n';
-                }
-            }
-        }
-        await code();
-        console = saveConsole;
-
+    function run() {
+        const code = new Function(ts.transpile(editorRef.current?.value ??
+            'throw new Error(\'An Error occured while loading the script\')'));
+        code();
     }
 
     return (
@@ -68,11 +74,9 @@ export default function MainWindow({ }: Props) {
                     <div className="explorer" ref={explorerRef}>abcdefg</div>
                     <div className="main-editor">
                         {/* @ts-ignore */}
-                        <SplitPane split="horizontal" primary='secondary'>
-                            <textarea defaultValue={"let a = 0;\nconsole.log(a);"} ref={editorRef}
-                                className='editor'>
-                            </textarea>
-                            <div style={{ 
+                        <SplitPane split="horizontal" minSize={50} defaultSize={300} primary='secondary'>
+                            <MultilineTextarea />
+                            <div style={{
                                 maxHeight: '100%',
                                 width: '100%',
                                 overflowY: 'scroll'

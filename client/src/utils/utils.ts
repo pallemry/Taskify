@@ -39,7 +39,7 @@ export function getHeightBetweenNavbarAndScreenBottom(bottomOffset: number = 0, 
  */
 export function checkUppercase(str: string): boolean {
     for (var i=0; i<str.length; i++){
-      if (str.charAt(i) == str.charAt(i).toUpperCase() && str.charAt(i).match(/[a-z]/i)){
+      if (str.charAt(i) === str.charAt(i).toUpperCase() && str.charAt(i).match(/[a-z]/i)){
         return true;
       }
     }
@@ -48,7 +48,7 @@ export function checkUppercase(str: string): boolean {
 
 export function checkLowercase(str: string): boolean {
     for (var i=0; i<str.length; i++){
-      if (str.charAt(i) == str.charAt(i).toLowerCase() && str.charAt(i).match(/[A-Z]/i)){
+      if (str.charAt(i) === str.charAt(i).toLowerCase() && str.charAt(i).match(/[A-Z]/i)){
         return true;
       }
     }
