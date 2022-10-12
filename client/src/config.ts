@@ -2,7 +2,8 @@ import { MenuItem } from "./MenuItem";
 
 export const config = Object.freeze({
     url: 'http://localhost:3000',
-    maxPasswordLength: 8
+    maxPasswordLength: 8,
+    DEV: true,
 });
 
 export const menuItems = Object.freeze<MenuItem>([

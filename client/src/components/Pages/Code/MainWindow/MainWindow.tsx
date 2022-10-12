@@ -5,25 +5,54 @@ import MultilevelMenus from '../../../MultiDropdown/MultilevelMenus/MultilevelMe
 import { menuItems } from '../../../../config';
 import { motion } from 'framer-motion';
 import { getHeightBetweenNavbarAndScreenBottom } from '../../../../utils/utils';
+import { MenuItem } from '../../../../MenuItem';
+import ts from 'typescript';
 
 type Props = {}
 
 export default function MainWindow({ }: Props) {
-    const editorRef = useRef<HTMLDivElement>(null);
+    const editorRef = useRef<HTMLTextAreaElement>(null);
     const explorerRef = useRef<HTMLDivElement>(null);
+    const consoleRef = useRef<HTMLUListElement>(null);
     const ref = useRef<HTMLDivElement>(null);
+
 
     useLayoutEffect(() => {
         function updateHeight() {
-          (ref.current as HTMLElement).style.height = getHeightBetweenNavbarAndScreenBottom(40) + 'px';
+            (ref.current as HTMLElement).style.height = getHeightBetweenNavbarAndScreenBottom(40) + 'px';
         }
         updateHeight();
         window.onresize = () => {
-          updateHeight();
+            updateHeight();
         }
-      })
+    })
 
-    function run() {
+    async function itemSelected(item: MenuItem) {
+        if (item.id === 2)
+            await run()
+    }
+
+    async function run() {
+        const saveConsole = console;
+        const code = new Function(ts.transpile(editorRef.current?.value ?? 'throw new Error(\'An Error occured while loading the script\')'));
+        console = {
+            assert: () => { },
+            clear: () => {
+                consoleRef.current!.innerHTML = '';
+            },
+            //@ts-ignore
+            Console: {},
+            log: (...args) => {
+                for (const arg of args) {
+                    if (typeof arg === 'object')
+                        consoleRef.current!.innerHTML += JSON.stringify(arg, null, 2) + '\n'
+                    else
+                        consoleRef.current!.innerHTML += arg + '\n';
+                }
+            }
+        }
+        await code();
+        console = saveConsole;
 
     }
 
@@ -32,21 +61,25 @@ export default function MainWindow({ }: Props) {
             width: '100%',
             position: 'relative'
         }} ref={ref}>
-            <MultilevelMenus items={menuItems} />
+            <MultilevelMenus items={menuItems} itemSelected={itemSelected} />
             <div className="whitebg main-wrapper">
-                {/* @ts-ignore */ }
+                {/* @ts-ignore */}
                 <SplitPane split="vertical" minSize={0} defaultSize={250} maxSize={1500}>
                     <div className="explorer" ref={explorerRef}>abcdefg</div>
-                    <div className="main-editor" ref={editorRef}>
-                        {/* @ts-ignore */ }
-                        <SplitPane split="horizontal" minSize={0} defaultSize={window.innerHeight - 400} maxSize={window.innerHeight - 100}>
-                            <textarea style={{
-
-                            }} defaultValue={"let a = 0;\nconsole.log(a);"}
+                    <div className="main-editor">
+                        {/* @ts-ignore */}
+                        <SplitPane split="horizontal" primary='secondary'>
+                            <textarea defaultValue={"let a = 0;\nconsole.log(a);"} ref={editorRef}
                                 className='editor'>
                             </textarea>
-                            <ul id='console'>
-                            </ul>
+                            <div style={{ 
+                                maxHeight: '100%',
+                                width: '100%',
+                                overflowY: 'scroll'
+                            }}>
+                                <ul id='console' ref={consoleRef}>
+                                </ul>
+                            </div>
                         </SplitPane>
                     </div>
                 </SplitPane>

@@ -9,9 +9,7 @@ export default function PasswordInputConfirmation({ }: Props) {
     const ref = useRef<HTMLInputElement>(null)
 
     function checkPassword(e: React.ChangeEvent<HTMLInputElement>) {
-        console.log(e.target.value, password);
         if (e.target.value !== password) {
-            console.log('no match found');
             e.target.setCustomValidity('Password must match');
         } else e.target.setCustomValidity('');
     }
