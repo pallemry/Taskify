@@ -34,6 +34,9 @@ export default function MainWindow({ }: Props) {
                     else
                         consoleRef.current!.innerHTML += arg + '\n';
                 }
+                const wrapper = document.getElementById("console-wrapper");
+                if (wrapper)
+                    wrapper.scrollTop = wrapper.scrollHeight;
             }
         }
         return () => {
@@ -77,13 +80,14 @@ export default function MainWindow({ }: Props) {
                     <div className="explorer" ref={explorerRef}>abcdefg</div>
                     <div className="main-editor">
                         {/* @ts-ignore */}
-                        <SplitPane split="horizontal" minSize={50} defaultSize={300} primary='secondary'>
+                        <SplitPane split="horizontal" minSize={50} defaultSize={300} primary='second'>
                             <MultilineTextarea ref={textEditorRef} defaultValue={currentFileContents} />
-                            <div style={{
-                                maxHeight: '100%',
-                                width: '100%',
-                                overflowY: 'auto'
-                            }}>
+                            <div id='console-wrapper'
+                                style={{
+                                    maxHeight: '100%',
+                                    width: '100%',
+                                    overflowY: 'auto'
+                                }}>
                                 <ul id='console' ref={consoleRef}>
                                 </ul>
                             </div>
