@@ -6,16 +6,17 @@ import { menuItems } from '../../../../config';
 import { getHeightBetweenNavbarAndScreenBottom } from '../../../../utils/utils';
 import { MenuItem } from '../../../../MenuItem';
 import ts from 'typescript';
-import MultilineTextarea from '../MultilineTextarea/MultilineTextarea';
+import MultilineTextarea, { IMultilineTextarea } from '../MultilineTextarea/MultilineTextarea';
 
 type Props = {}
 
 export default function MainWindow({ }: Props) {
-    const editorRef = useRef<HTMLTextAreaElement>(null);
+    const textEditorRef = useRef<IMultilineTextarea>(null);
     const explorerRef = useRef<HTMLDivElement>(null);
     const consoleRef = useRef<HTMLUListElement>(null);
     const ref = useRef<HTMLDivElement>(null);
-    const [saveConsole] = useState(console)
+    const [saveConsole] = useState(console);
+    const [currentFileContents, setCurrentFileContents] = useState('// You are using taskify!\nconsole.log("Hello world");');
 
     useEffect(() => {
         console = {
@@ -50,16 +51,18 @@ export default function MainWindow({ }: Props) {
         }
     })
 
-
     function itemSelected(item: MenuItem) {
         if (item.id === 2)
             run()
     }
 
     function run() {
-        const code = new Function(ts.transpile(editorRef.current?.value ??
-            'throw new Error(\'An Error occured while loading the script\')'));
-        code();
+        if (textEditorRef.current) {
+            const code = new Function(ts.transpile(textEditorRef.current.getValue()));
+            code();
+        } else {
+            console.log('An error occured while loading the script');
+        }
     }
 
     return (
@@ -75,11 +78,11 @@ export default function MainWindow({ }: Props) {
                     <div className="main-editor">
                         {/* @ts-ignore */}
                         <SplitPane split="horizontal" minSize={50} defaultSize={300} primary='secondary'>
-                            <MultilineTextarea />
+                            <MultilineTextarea ref={textEditorRef} defaultValue={currentFileContents} />
                             <div style={{
                                 maxHeight: '100%',
                                 width: '100%',
-                                overflowY: 'scroll'
+                                overflowY: 'auto'
                             }}>
                                 <ul id='console' ref={consoleRef}>
                                 </ul>

@@ -8,6 +8,7 @@
     border-top: 2px solid black;
     overflow: hidden;
     position: relative;
+    font-family: "Source Code Pro", monospace;
 }
 
 .explorer {
@@ -24,37 +25,15 @@
     padding: 0;
 }
 
-/* .line-numbers {
-    height: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
-}
-
-.line-numbers li {
-    height: 30px;
-    text-align: end;
-    font-family: "Source Code Pro", monospace;
-}
-
-.editor {
-    display: flex;
-    flex-direction: row;
-    font-size: 2em;
-    height: 100%;
-}
-
-.editorText {
-    overflow: visible;
-    line-height: 30px;
-    font-size: 1em;
-    height: 100%;
-} */
-
 #console {
-    height: 100%;
-    width: 100%;
-    padding: 0;
+    height: fit-content;
+    --padding-side: 10px;
+    width: calc(100% - (var(--padding-side) * 2));
     white-space:pre-wrap;
+    font-family: inherit;
+    overflow: visible;
+    padding: 5px var(--padding-side) 20px var(--padding-side);
+    margin: 0;
 }
 
 #run-button {
