@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import './MainWindow.css'
 import SplitPane from 'react-split-pane'
 import MultilevelMenus from '../../../MultiDropdown/MultilevelMenus/MultilevelMenu';
-import { menuItems } from '../../../../config';
+import { config, menuItems } from '../../../../config';
 import { getHeightBetweenNavbarAndScreenBottom } from '../../../../utils/utils';
 import { MenuItem } from '../../../../MenuItem';
 import ts from 'typescript';
@@ -16,7 +16,7 @@ export default function MainWindow({ }: Props) {
     const consoleRef = useRef<HTMLUListElement>(null);
     const ref = useRef<HTMLDivElement>(null);
     const [saveConsole] = useState(console);
-    const [currentFileContents, setCurrentFileContents] = useState('// You are using taskify!\nconsole.log("Hello world");');
+    const [currentFileContents, setCurrentFileContents] = useState(config.defaultFileContents);
 
     useEffect(() => {
         console = {
