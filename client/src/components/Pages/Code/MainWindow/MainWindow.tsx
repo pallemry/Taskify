@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import './MainWindow.css'
 import SplitPane from 'react-split-pane'
 import MultilevelMenus from '../../../MultiDropdown/MultilevelMenus/MultilevelMenu';
@@ -7,9 +7,11 @@ import { getHeightBetweenNavbarAndScreenBottom } from '../../../../utils/utils';
 import { MenuItem } from '../../../../MenuItem';
 import ts from 'typescript';
 import MultilineTextarea, { IMultilineTextarea } from '../MultilineTextarea/MultilineTextarea';
+import { error } from 'console';
+import ConsoleMethod from './ConsoleMethod';
+import IConsoleMessage, { MessageType } from './IConsoleMessage';
 
 type Props = {}
-
 export default function MainWindow({ }: Props) {
     const textEditorRef = useRef<IMultilineTextarea>(null);
     const explorerRef = useRef<HTMLDivElement>(null);
@@ -17,26 +19,62 @@ export default function MainWindow({ }: Props) {
     const ref = useRef<HTMLDivElement>(null);
     const [saveConsole] = useState(console);
     const [currentFileContents, setCurrentFileContents] = useState(config.defaultFileContents);
+    const [consoleMessages, setConsoleMessages] = useState<IConsoleMessage[]>([]);
+
+    function log(...args: any[]) {
+        saveConsole.log(...args);
+        let message = '';
+
+        for (let index = 0; index < args.length; index++) {
+            const arg = args[index];
+            if (typeof arg === 'string') {
+                message += arg;
+            }
+            else {
+                message += JSON.stringify(arg, null, 2);
+            }
+
+            if (index < args.length - 1)
+                message += ', '
+        }
+
+        consoleMessages.push({
+            type: MessageType.Nomrmal,
+            message: message
+        })
+
+        setConsoleMessages([...consoleMessages])
+    }
+
+
 
     useEffect(() => {
         console = {
             assert: () => { },
             clear: () => {
-                consoleRef.current!.innerHTML = '';
+                consoleMessages.length = 0;
             },
             //@ts-ignore
             Console: {},
-            log: (...args) => {
-                saveConsole.log(...args)
-                for (const arg of args) {
-                    if (typeof arg === 'object')
-                        consoleRef.current!.innerHTML += JSON.stringify(arg, null, 2) + '\n'
-                    else
-                        consoleRef.current!.innerHTML += arg + '\n';
-                }
-                const wrapper = document.getElementById("console-wrapper");
-                if (wrapper)
-                    wrapper.scrollTop = wrapper.scrollHeight;
+            log: new ConsoleMethod(log).getFunction(),
+            error: new ConsoleMethod((message: any) => {
+                saveConsole.error(message);
+                const messageAsJson = JSON.stringify(message, Object.getOwnPropertyNames(message), 2).replaceAll('\\n', '\n');
+                consoleMessages.push({
+                    message: messageAsJson,
+                    type: MessageType.Error,
+                    title: "Error: " + message.message
+                });
+                setConsoleMessages([...consoleMessages]);
+            }).getFunction(),
+            warn: (message: any) => {
+                saveConsole.error(message);
+                const messageAsJson = JSON.stringify(message, Object.getOwnPropertyNames(message), 2).replaceAll('\\n', '\n');
+                consoleMessages.push({
+                    message: "Warning: " + messageAsJson,
+                    type: MessageType.Warning
+                });
+                setConsoleMessages([...consoleMessages]);
             }
         }
         return () => {
@@ -55,16 +93,27 @@ export default function MainWindow({ }: Props) {
     })
 
     function itemSelected(item: MenuItem) {
-        if (item.id === 2)
+        if (item.id === 2) {
             run()
+        }
+    }
+
+    function reset() {
+        console.clear();
     }
 
     function run() {
         if (textEditorRef.current) {
-            const code = new Function(ts.transpile(textEditorRef.current.getValue()));
-            code();
+            try {
+                reset();
+                console.log('Started..');
+                const code = new Function(ts.transpile(textEditorRef.current.getValue()));
+                code();
+            } catch (error) {
+                console.error(error);
+            }
         } else {
-            console.log('An error occured while loading the script');
+            console.error('An error occured while loading the script');
         }
     }
 
@@ -82,15 +131,33 @@ export default function MainWindow({ }: Props) {
                         {/* @ts-ignore */}
                         <SplitPane split="horizontal" minSize={50} defaultSize={300} primary='second'>
                             <MultilineTextarea ref={textEditorRef} defaultValue={currentFileContents} />
-                            <div id='console-wrapper'
+                            {/* <div id='console-wrapper'
                                 style={{
                                     maxHeight: '100%',
                                     width: '100%',
                                     overflowY: 'auto'
-                                }}>
+                                }}> */}
                                 <ul id='console' ref={consoleRef}>
+                                    {
+                                        consoleMessages.map((consoleMessage, index) => {
+                                            
+                                            return <li
+                                                key={index}
+                                                className={`console ${consoleMessage.type.toString()}`}>
+                                                {
+                                                    consoleMessage.type === MessageType.Error ?
+
+                                                        <details onDoubleClick={(e) => e.preventDefault()}>
+                                                            <summary>{consoleMessage.title}</summary>
+                                                            {consoleMessage.message}
+                                                        </details> :
+                                                        <>{consoleMessage.message}</>
+                                                }
+                                            </li>
+                                        })
+                                    }
                                 </ul>
-                            </div>
+                            {/* </div> */}
                         </SplitPane>
                     </div>
                 </SplitPane>

@@ -26,14 +26,37 @@
 }
 
 #console {
-    height: fit-content;
+    background-color: #1d1f2b;
     --padding-side: 10px;
     width: calc(100% - (var(--padding-side) * 2));
     white-space:pre-wrap;
     font-family: inherit;
-    overflow: visible;
+    overflow: auto;
     padding: 5px var(--padding-side) 20px var(--padding-side);
     margin: 0;
+}
+
+#console li {
+    padding: 3px 0px 3px 5px;
+}
+
+.console.error {
+    width: fit-content;
+    padding-right: 5px !important;
+    background-color: black;
+    color: red;    
+}
+
+.console.warning {
+    color: orange 
+}
+
+.console.info {
+    color: dodgerblue;
+}
+
+.console.normal {
+    color: white;
 }
 
 #run-button {

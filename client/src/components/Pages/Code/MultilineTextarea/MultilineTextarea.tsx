@@ -41,7 +41,7 @@ const MultilineTextarea = React.forwardRef<IMultilineTextarea, Props>((props: Pr
     $('.editor').css('max-height', '1000px')
   })
 
-  function onTextAreaKeyUp(e: React.KeyboardEvent<HTMLTextAreaElement>) {
+  function onTextAreaKeyUp<T>(e: React.KeyboardEvent<T>) {
     updateText((e.target as HTMLTextAreaElement).value);
   }
 
@@ -55,7 +55,7 @@ const MultilineTextarea = React.forwardRef<IMultilineTextarea, Props>((props: Pr
     }
   }
 
-  function onTextAreaKeyDown(event: React.KeyboardEvent<HTMLTextAreaElement>) {
+  function onTextAreaKeyDown<T>(event: React.KeyboardEvent<T>) {
     if (event.key === 'Tab' && textEditorRef.current) {
       const start = textEditorRef.current.selectionStart
       const end = textEditorRef.current.selectionEnd
@@ -71,12 +71,14 @@ const MultilineTextarea = React.forwardRef<IMultilineTextarea, Props>((props: Pr
       <div className="line-numbers" ref={lineNumbersRef}>
         <span></span>
       </div>
-      <textarea ref={textEditorRef}
+      <textarea 
+        
+        ref={textEditorRef}
         defaultValue={props.defaultValue}
         onKeyUp={onTextAreaKeyUp}
         onKeyDown={onTextAreaKeyDown}
         id='editor-text-id'
-        onScroll={(e) => {
+        onScroll={() => {
           $('.line-numbers').css('top', (-($('#editor-text-id').scrollTop() ?? 0)) + 'px')
         }}
       ></textarea>
