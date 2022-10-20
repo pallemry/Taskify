@@ -10,6 +10,7 @@ import MultilineTextarea, { IMultilineTextarea } from '../MultilineTextarea/Mult
 import { error } from 'console';
 import ConsoleMethod from './ConsoleMethod';
 import IConsoleMessage, { MessageType } from './IConsoleMessage';
+import ConsoleMessage from '../ConsoleMessage/ConsoleMessage';
 
 type Props = {}
 export default function MainWindow({ }: Props) {
@@ -46,7 +47,9 @@ export default function MainWindow({ }: Props) {
         setConsoleMessages([...consoleMessages])
     }
 
-
+    useEffect(() => {
+        textEditorRef.current?.setValue(currentFileContents)
+    }, [currentFileContents]);
 
     useEffect(() => {
         console = {
@@ -106,7 +109,6 @@ export default function MainWindow({ }: Props) {
         if (textEditorRef.current) {
             try {
                 reset();
-                console.log('Started..');
                 const code = new Function(ts.transpile(textEditorRef.current.getValue()));
                 code();
             } catch (error) {
@@ -126,38 +128,25 @@ export default function MainWindow({ }: Props) {
             <div className="whitebg main-wrapper">
                 {/* @ts-ignore */}
                 <SplitPane split="vertical" minSize={0} defaultSize={250} maxSize={1500}>
-                    <div className="explorer" ref={explorerRef}>abcdefg</div>
+                    <div className="explorer" ref={explorerRef}>
+                        <input id='123'/>
+                        <button id='hi'
+                        onClick={(e) => {
+                            setCurrentFileContents((document.getElementById('123') as HTMLInputElement).value);
+                        }}
+                        >change file contents</button>
+                    </div>
                     <div className="main-editor">
                         {/* @ts-ignore */}
                         <SplitPane split="horizontal" minSize={50} defaultSize={300} primary='second'>
                             <MultilineTextarea ref={textEditorRef} defaultValue={currentFileContents} />
-                            {/* <div id='console-wrapper'
-                                style={{
-                                    maxHeight: '100%',
-                                    width: '100%',
-                                    overflowY: 'auto'
-                                }}> */}
-                                <ul id='console' ref={consoleRef}>
-                                    {
-                                        consoleMessages.map((consoleMessage, index) => {
-                                            
-                                            return <li
-                                                key={index}
-                                                className={`console ${consoleMessage.type.toString()}`}>
-                                                {
-                                                    consoleMessage.type === MessageType.Error ?
-
-                                                        <details onDoubleClick={(e) => e.preventDefault()}>
-                                                            <summary>{consoleMessage.title}</summary>
-                                                            {consoleMessage.message}
-                                                        </details> :
-                                                        <>{consoleMessage.message}</>
-                                                }
-                                            </li>
-                                        })
-                                    }
-                                </ul>
-                            {/* </div> */}
+                            <ul id='console' ref={consoleRef}>
+                                {
+                                    consoleMessages.map((consoleMessage, index) => {
+                                        return <ConsoleMessage message={consoleMessage} key={index} />
+                                    })
+                                }
+                            </ul>
                         </SplitPane>
                     </div>
                 </SplitPane>

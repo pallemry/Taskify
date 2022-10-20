@@ -2,7 +2,7 @@ export default class ConsoleMethod<T extends Function> implements IConsoleMethod
     constructor(public readonly method: T) { }
 
     private afterMethodCall() {
-        const wrapper = document.getElementById("console-wrapper");
+        const wrapper = document.getElementById("console");
         if (wrapper)
             wrapper.scrollTop = wrapper.scrollHeight;
     }

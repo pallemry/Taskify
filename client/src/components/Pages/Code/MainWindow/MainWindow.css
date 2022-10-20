@@ -40,25 +40,6 @@
     padding: 3px 0px 3px 5px;
 }
 
-.console.error {
-    width: fit-content;
-    padding-right: 5px !important;
-    background-color: black;
-    color: red;    
-}
-
-.console.warning {
-    color: orange 
-}
-
-.console.info {
-    color: dodgerblue;
-}
-
-.console.normal {
-    color: white;
-}
-
 #run-button {
     position: absolute;
     right: 0;
@@ -77,10 +58,11 @@
 }
 
 .Resizer.horizontal {
-    height: 11px;
+    height: 7px;
     margin: -5px 0;
-    border-top: 5px solid rgba(255, 255, 255, 0);
-    border-bottom: 5px solid rgba(255, 255, 255, 0);
+    background: black;
+    border-top: 3px solid rgba(255, 255, 255, 0);
+    border-bottom: 3px solid rgba(255, 255, 255, 0);
     cursor: row-resize;
     width: 100%;
 }

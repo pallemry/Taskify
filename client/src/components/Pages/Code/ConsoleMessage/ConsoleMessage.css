@@ -1,0 +1,20 @@
+.console {
+    border-bottom: 1px solid rgba(185, 185, 185, 0.526);
+}
+
+.console.error {
+    background-color: black;
+    color: red;    
+}
+
+.console.warning {
+    color: orange 
+}
+
+.console.info {
+    color: dodgerblue;
+}
+
+.console.normal {
+    color: white;
+}
