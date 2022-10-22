@@ -11,6 +11,8 @@ import { error } from 'console';
 import ConsoleMethod from './ConsoleMethod';
 import IConsoleMessage, { MessageType } from './IConsoleMessage';
 import ConsoleMessage from '../ConsoleMessage/ConsoleMessage';
+import Explorer from '../../Explorer/Explorer'
+import { testExplorerItems } from '../../Test/Test';
 
 type Props = {}
 export default function MainWindow({ }: Props) {
@@ -128,14 +130,7 @@ export default function MainWindow({ }: Props) {
             <div className="whitebg main-wrapper">
                 {/* @ts-ignore */}
                 <SplitPane split="vertical" minSize={0} defaultSize={250} maxSize={1500}>
-                    <div className="explorer" ref={explorerRef}>
-                        <input id='123'/>
-                        <button id='hi'
-                        onClick={(e) => {
-                            setCurrentFileContents((document.getElementById('123') as HTMLInputElement).value);
-                        }}
-                        >change file contents</button>
-                    </div>
+                    <Explorer items={testExplorerItems}/>
                     <div className="main-editor">
                         {/* @ts-ignore */}
                         <SplitPane split="horizontal" minSize={50} defaultSize={300} primary='second'>
