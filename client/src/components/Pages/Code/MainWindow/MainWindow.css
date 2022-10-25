@@ -40,6 +40,19 @@
     padding: 3px 0px 3px 5px;
 }
 
+#explorer {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    color: white;
+    background: var(--background);
+    overflow: hidden;
+}
+
+#explorer:hover {
+    overflow: auto;
+}
+
 #run-button {
     position: absolute;
     right: 0;

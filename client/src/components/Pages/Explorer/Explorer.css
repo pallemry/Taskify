@@ -1,20 +1,7 @@
-*:has(> .root) {
-    color: white;
-    background: var(--background);
-    overflow: hidden;
-}
-
-*:has(> .root):hover {
-    overflow: auto;
-}
-
 .root {
-    position: absolute;
     margin: 0;
     padding-left: 10px;
 }
-
-.root li {}
 
 .f-name {
     word-break: keep-all;

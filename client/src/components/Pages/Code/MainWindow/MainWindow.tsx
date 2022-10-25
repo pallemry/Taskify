@@ -130,7 +130,9 @@ export default function MainWindow({ }: Props) {
             <div className="whitebg main-wrapper">
                 {/* @ts-ignore */}
                 <SplitPane split="vertical" minSize={0} defaultSize={250} maxSize={1500}>
-                    <Explorer items={testExplorerItems}/>
+                    <div id="explorer">
+                        <Explorer items={testExplorerItems} />
+                    </div>
                     <div className="main-editor">
                         {/* @ts-ignore */}
                         <SplitPane split="horizontal" minSize={50} defaultSize={300} primary='second'>
