@@ -131,7 +131,7 @@ export default function MainWindow({ }: Props) {
             <MultilevelMenus items={menuItems} itemSelected={itemSelected} />
             <div className="whitebg main-wrapper">
                 <Allotment>
-                    <Allotment.Pane>
+                    <Allotment.Pane snap preferredSize={window.innerWidth / 7 } minSize={window.innerWidth / 14 }>
                         <div id="explorer" className="maximize">
                             <Explorer items={testExplorerItems} />
                         </div>
