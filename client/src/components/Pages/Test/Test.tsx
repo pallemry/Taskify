@@ -1,7 +1,19 @@
-import React, { useImperativeHandle, useRef, useState } from 'react'
+import React from 'react'
+import { uuidv4 } from '../../../utils/utils'
+import { FolderOrFile } from '../Explorer/Helper/ExpolerInterfaces'
 
 type Props = {}
 
-export default function Test({ }: Props) {
-    return <></>
+export const testExplorerItems: FolderOrFile[] = [
+    {
+        fileContents: 'hello',
+        name: 'a.js',
+        id: uuidv4()
+    }
+]
+
+export default function Test({}: Props) {
+  return (
+    <div>Test</div>
+  )
 }
