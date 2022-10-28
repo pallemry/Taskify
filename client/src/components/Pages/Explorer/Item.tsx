@@ -1,48 +1,65 @@
 import React, { useEffect, useState } from 'react'
-import { FolderOrFile, getReadableType, ReadableType, File, Folder } from './Helper/ExpolerInterfaces'
+import { uuidv4 } from '../../../utils/utils';
+import { FolderOrFile, getReadableType, ReadableType, File as IFile, Folder as IFolder } from './Helper/ExpolerInterfaces'
 
-type Props = {
+type ItemMouseEvent = React.MouseEvent & {
     item: FolderOrFile;
-    depth?: number;
 }
 
-function isFile(item: any) {
+type Props<T extends FolderOrFile = FolderOrFile> = {
+    item: T;
+    depth?: number;
+    onClick?: (e: ItemMouseEvent) => void;
+}
+
+
+export function isFile(item: any): item is IFile {
     return getReadableType(item) === ReadableType.File;
 }
 
-function isFolder(item: any) {
+export function isFolder(item: any): item is IFolder {
     return getReadableType(item) === ReadableType.Folder;
 }
 
-export default function Item({item, depth}: Props) {
-
-    function onClick() {
-        console.log(item.name)
-    }
-
-    let body: JSX.Element;
-    if (isFile(item))
-        body = (<div className="file" onClick={onClick}>
-            <div className="f-name">
-                {item.name} + {depth}
+export function File(props: Props<IFile>) {
+    return (
+        <div className="file">
+            <div className="f-name" onClick={(e) => props.onClick?.({ ...e, item: props.item })}>
+                {props.item.name} + {props.depth}
             </div>
-        </div>);
-    else
-        body = (<div className="folder">
+        </div>
+    )
+}
+
+
+export function Folder(props: Props<IFolder>) {
+    const [subItems, setSubItems] = useState(props.item.subItems);
+
+    useEffect(() => {
+        console.log('Files inside: ' + props.item.name + " were changed")
+        
+    }, [subItems])
+
+    return (
+        <div className="folder">
             <details>
-                <summary onClick={onClick} className="f-name">{item.name} + {depth}</summary>
+                <summary onClick={(e) => props.onClick?.({ ...e, item: props.item })} className="f-name">{props.item.name} + {props.depth}</summary>
                 <ul className="items">
                     {
-                        (item as Folder).subItems.map(subItem => (
-                            <li key={subItem.name}>
-                                <Item item={subItem} depth={(depth ?? 0) + 1}></Item>
+                        subItems.map(subItem => (
+                            <li key={subItem.id}>
+                                {
+                                    isFile(subItem) ?
+                                        <File onClick={props.onClick} item={subItem} depth={(props.depth ?? 0) + 1} key={subItem.name} /> :
+                                        <Folder item={subItem} onClick={props.onClick}
+                                        depth={(props.depth ?? 0) + 1}/>
+                                }
                             </li>
                         ))
                     }
                 </ul>
             </details>
-        </div>);
-
-    return body;
+        </div>
+    )
 }
 

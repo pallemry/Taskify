@@ -34,10 +34,3 @@ body:has(.modal) > #root, body:has(.hide-background) > #root, body:has(.input__b
   background-color: #2f74c0;
   font-family: "Neucha", cursive;
 }
-
-@media (max-width: 800px) {
-  .heading {
-    margin: 15px 0;
-    font-size: 35px;
-  }
-}

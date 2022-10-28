@@ -3,7 +3,7 @@ import './MainWindow.css'
 import SplitPane from 'react-split-pane'
 import MultilevelMenus from '../../../MultiDropdown/MultilevelMenus/MultilevelMenu';
 import { config, menuItems } from '../../../../config';
-import { getHeightBetweenNavbarAndScreenBottom } from '../../../../utils/utils';
+import { getHeightBetweenNavbarAndScreenBottom, uuidv4 } from '../../../../utils/utils';
 import { MenuItem } from '../../../../MenuItem';
 import ts from 'typescript';
 import MultilineTextarea, { IMultilineTextarea } from '../MultilineTextarea/MultilineTextarea';
