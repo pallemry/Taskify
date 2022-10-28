@@ -1,6 +1,5 @@
 import { useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import './MainWindow.css'
-import SplitPane from 'react-split-pane'
 import MultilevelMenus from '../../../MultiDropdown/MultilevelMenus/MultilevelMenu';
 import { config, menuItems } from '../../../../config';
 import { getHeightBetweenNavbarAndScreenBottom, uuidv4 } from '../../../../utils/utils';
@@ -14,6 +13,8 @@ import ConsoleMessage from '../ConsoleMessage/ConsoleMessage';
 import Explorer from '../../Explorer/Explorer'
 import { testExplorerItems } from '../../Test/Test';
 import { ConsoleContext } from '../ConsoleProvider/ConsoleProvider';
+import { Allotment } from 'allotment';
+import "allotment/dist/style.css";
 
 type Props = {}
 export default function MainWindow({ }: Props) {
@@ -53,7 +54,7 @@ export default function MainWindow({ }: Props) {
     useEffect(() => {
         textEditorRef.current?.setValue(currentFileContents)
     }, [currentFileContents]);
-    
+
     useEffect(() => {
         console = {
             assert: () => { },
@@ -129,25 +130,33 @@ export default function MainWindow({ }: Props) {
         }} ref={ref}>
             <MultilevelMenus items={menuItems} itemSelected={itemSelected} />
             <div className="whitebg main-wrapper">
-                {/* @ts-ignore */}
-                <SplitPane split="vertical" minSize={0} defaultSize={250} maxSize={1500}>
-                    <div id="explorer">
-                        <Explorer items={testExplorerItems}/>
-                    </div>
-                    <div className="main-editor">
-                        {/* @ts-ignore */}
-                        <SplitPane split="horizontal" minSize={50} defaultSize={300} primary='second'>
-                            <MultilineTextarea ref={textEditorRef} defaultValue={currentFileContents} />
-                            <ul id='console' ref={consoleRef}>
-                                {
-                                    consoleMessages.map((consoleMessage, index) => {
-                                        return <ConsoleMessage message={consoleMessage} key={index} />
-                                    })
-                                }
-                            </ul>
-                        </SplitPane>
-                    </div>
-                </SplitPane>
+                <Allotment>
+                    <Allotment.Pane>
+                        <div id="explorer" className="maximize">
+                            <Explorer items={testExplorerItems} />
+                        </div>
+                    </Allotment.Pane>
+                    <Allotment.Pane>
+                        <div className="main-editor maximize">
+                            <Allotment vertical>
+                                <Allotment.Pane>
+                                    <div className="maximize">
+                                        <MultilineTextarea ref={textEditorRef} defaultValue={currentFileContents} />
+                                    </div>
+                                </Allotment.Pane>
+                                <Allotment.Pane>
+                                    <ul id='console' className="maximize" ref={consoleRef}>
+                                        {
+                                            consoleMessages.map((consoleMessage, index) => {
+                                                return <ConsoleMessage message={consoleMessage} key={index} />
+                                            })
+                                        }
+                                    </ul>
+                                </Allotment.Pane>
+                            </Allotment>
+                        </div>
+                    </Allotment.Pane>
+                </Allotment>
             </div>
         </div>
     )

@@ -7,7 +7,7 @@ type Props = {}
 export const testExplorerItems: FolderOrFile[] = [
     {
         fileContents: 'hello',
-        name: 'a.js',
+        name: 'ab.js',
         id: uuidv4()
     }
 ]
