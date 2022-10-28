@@ -1,28 +1,20 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
 import { FolderOrFile } from './Helper/ExpolerInterfaces'
 import { Folder, isFolder, File } from './Item'
 import './Explorer.css'
 import { randomBool, uuidv4 } from '../../../utils/utils'
+import { ConsoleContext } from '../Code/ConsoleProvider/ConsoleProvider'
 
 type Props = {
-    items: FolderOrFile[]
+    items: FolderOrFile[], 
 }
-
-export default function Explorer({ items: i }: Props) {
-    const [items, setItems] = useState(i)
+// NOTE: DO NOT USE CONSOLE LOG ON EACH RENDER THIS WILL CAUSE AN INFNITE LOOP! INSTEAD USE saveConsole
+export default function Explorer({ items }: Props) {
+    const { saveConsole } = useContext(ConsoleContext)
 
     useEffect(() => {
-        applyIds(items)
+        saveConsole.log('initialized')
     }, [])
-
-    function applyIds(items: FolderOrFile[]): void {
-        items.forEach(item => {
-            item.id = uuidv4();
-            if (isFolder(item)) {
-                applyIds(item.subItems)
-            }
-        })
-    }
 
     return (
         <>
@@ -31,10 +23,10 @@ export default function Explorer({ items: i }: Props) {
                     items.map(i => {
                         return isFolder(i) 
                             ? <Folder item={i} onClick={(e) => { 
-                                console.log(e.item.name)
-                            }}/>
-                            : <File item={i} onClick={(e) => { 
-                                console.log(e.item.name)
+                            }}
+                                key={i.id}
+                            />
+                            : <File key={i.id} item={i} onClick={(e) => { 
                             }}/>
                     })
                 }
@@ -42,4 +34,4 @@ export default function Explorer({ items: i }: Props) {
             </ul>
         </>
     )
-}
+} 

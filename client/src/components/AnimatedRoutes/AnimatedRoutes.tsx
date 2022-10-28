@@ -10,6 +10,7 @@ import Home from '../Pages/Home/MainComponent/Home'
 import MainWindow from '../Pages/Code/MainWindow/MainWindow'
 import { config } from '../../config'
 import Test from '../Pages/Test/Test'
+import Code from '../Pages/Code/Code'
 
 type Props = {}
 
@@ -24,9 +25,7 @@ export default function AnimatedRoutes({ }: Props) {
                 <Route path={ROUTES.login} element={<Login />} />
                 <Route path={ROUTES.any} element={<NotFound />} />
                 <Route path={ROUTES.signup} element={<Signup />} />
-                <Route path={ROUTES.code}>
-                    <Route index element={<MainWindow />}></Route>
-                </Route>
+                <Route path={ROUTES.code} element={<Code />} />
                 {config.DEV && 
                 <Route path={ROUTES.test} element={<Test />}/>
                 }

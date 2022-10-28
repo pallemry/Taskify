@@ -1,4 +1,6 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react'
+import * as icons from '@fortawesome/free-solid-svg-icons';
 import { uuidv4 } from '../../../utils/utils';
 import { FolderOrFile, getReadableType, ReadableType, File as IFile, Folder as IFolder } from './Helper/ExpolerInterfaces'
 
@@ -25,7 +27,7 @@ export function File(props: Props<IFile>) {
     return (
         <div className="file">
             <div className="f-name" onClick={(e) => props.onClick?.({ ...e, item: props.item })}>
-                {props.item.name} + {props.depth}
+                {props.item.name}
             </div>
         </div>
     )
@@ -34,28 +36,30 @@ export function File(props: Props<IFile>) {
 
 export function Folder(props: Props<IFolder>) {
     const [subItems, setSubItems] = useState(props.item.subItems);
-
-    useEffect(() => {
-        console.log('Files inside: ' + props.item.name + " were changed")
-        
-    }, [subItems])
-
+    const [folderOpen, setFolderOpen] = useState(false);
     return (
         <div className="folder">
-            <details>
-                <summary onClick={(e) => props.onClick?.({ ...e, item: props.item })} className="f-name">{props.item.name} + {props.depth}</summary>
+            <details open={folderOpen} onChange={() => {
+                return setFolderOpen(prev => !prev);
+            }} >
+                <summary onClick={(e) => props.onClick?.({ ...e, item: props.item })} className="f-name">
+                    <FontAwesomeIcon icon={folderOpen ? icons.faFolderOpen : icons.faFolder} style={{ marginRight: '5px' }} />
+                    {props.item.name}
+                </summary>
                 <ul className="items">
                     {
-                        subItems.map(subItem => (
-                            <li key={subItem.id}>
-                                {
-                                    isFile(subItem) ?
-                                        <File onClick={props.onClick} item={subItem} depth={(props.depth ?? 0) + 1} key={subItem.name} /> :
-                                        <Folder item={subItem} onClick={props.onClick}
-                                        depth={(props.depth ?? 0) + 1}/>
-                                }
-                            </li>
-                        ))
+                        subItems.map(subItem => {
+                            return (
+                                <li key={subItem.id}>
+                                    {
+                                        isFile(subItem) ?
+                                            <File key={subItem.id} onClick={props.onClick} item={subItem} depth={(props.depth ?? 0) + 1} /> :
+                                            <Folder key={subItem.id} item={subItem} onClick={props.onClick} depth={(props.depth ?? 0) + 1} />
+                                            // <div key={subItem.id}>{subItem.name}</div>
+                                    }
+                                </li>
+                            );
+                        })
                     }
                 </ul>
             </details>

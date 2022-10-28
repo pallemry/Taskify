@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import './MainWindow.css'
 import SplitPane from 'react-split-pane'
 import MultilevelMenus from '../../../MultiDropdown/MultilevelMenus/MultilevelMenu';
@@ -13,6 +13,7 @@ import IConsoleMessage, { MessageType } from './IConsoleMessage';
 import ConsoleMessage from '../ConsoleMessage/ConsoleMessage';
 import Explorer from '../../Explorer/Explorer'
 import { testExplorerItems } from '../../Test/Test';
+import { ConsoleContext } from '../ConsoleProvider/ConsoleProvider';
 
 type Props = {}
 export default function MainWindow({ }: Props) {
@@ -20,7 +21,7 @@ export default function MainWindow({ }: Props) {
     const explorerRef = useRef<HTMLDivElement>(null);
     const consoleRef = useRef<HTMLUListElement>(null);
     const ref = useRef<HTMLDivElement>(null);
-    const [saveConsole] = useState(console);
+    const { saveConsole } = useContext(ConsoleContext);
     const [currentFileContents, setCurrentFileContents] = useState(config.defaultFileContents);
     const [consoleMessages, setConsoleMessages] = useState<IConsoleMessage[]>([]);
 
@@ -52,7 +53,7 @@ export default function MainWindow({ }: Props) {
     useEffect(() => {
         textEditorRef.current?.setValue(currentFileContents)
     }, [currentFileContents]);
-
+    
     useEffect(() => {
         console = {
             assert: () => { },
@@ -131,7 +132,7 @@ export default function MainWindow({ }: Props) {
                 {/* @ts-ignore */}
                 <SplitPane split="vertical" minSize={0} defaultSize={250} maxSize={1500}>
                     <div id="explorer">
-                        <Explorer items={testExplorerItems} />
+                        <Explorer items={testExplorerItems}/>
                     </div>
                     <div className="main-editor">
                         {/* @ts-ignore */}

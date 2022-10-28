@@ -6,3 +6,15 @@
 .f-name {
     word-break: keep-all;
 }
+
+.folder li {
+    display: block;
+}
+
+summary.f-name {
+    list-style-type: '';
+}
+
+details[open] > summary.f-name {
+    list-style-type: '';
+}
