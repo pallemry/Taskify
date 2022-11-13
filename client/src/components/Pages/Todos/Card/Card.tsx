@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useRef, useState } from 'react';
 import ExpandableText from '../Expandable text/ExpandableText';
-import * as icons from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faEdit, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import './Card.css'
 import { CardPropTypes } from './CardPropTypes';
 import useOutsideAlerter from '../../../../hooks/useOutsideAlerter';
@@ -56,21 +56,21 @@ const Card = (props: CardPropTypes) => {
             </div>
             <div className="icons" id={"icons-" + todo.id}>
                 <FontAwesomeIcon
-                    icon={icons.faTrashCan}
+                    icon={faTrashCan}
                     className='icon'
                     title='Delete task'
                     onClick={deleteTask}
                     onMouseDown={prevent}
                 ></FontAwesomeIcon>
                 <FontAwesomeIcon
-                    icon={icons.faEdit}
+                    icon={faEdit}
                     className='icon'
                     title='Edit task'
                     onClick={() => setIsEditing(prev => !prev)}
                     onMouseDown={prevent}
                 ></FontAwesomeIcon>
                 <FontAwesomeIcon
-                    icon={icons.faCheck}
+                    icon={faCheck}
                     className='icon'
                     title='Mark as done'
                     onClick={markDone}

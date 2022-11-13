@@ -4,9 +4,8 @@ import MultilevelMenus from '../../../MultiDropdown/MultilevelMenus/MultilevelMe
 import { config, menuItems } from '../../../../config';
 import { getHeightBetweenNavbarAndScreenBottom, uuidv4 } from '../../../../utils/utils';
 import { MenuItem } from '../../../../MenuItem';
-import ts from 'typescript';
+import { transpile } from 'typescript';
 import MultilineTextarea, { IMultilineTextarea } from '../MultilineTextarea/MultilineTextarea';
-import { error } from 'console';
 import ConsoleMethod from './ConsoleMethod';
 import IConsoleMessage, { MessageType } from './IConsoleMessage';
 import ConsoleMessage from '../ConsoleMessage/ConsoleMessage';
@@ -113,7 +112,7 @@ export default function MainWindow({ }: Props) {
         if (textEditorRef.current) {
             try {
                 reset();
-                const code = new Function(ts.transpile(textEditorRef.current.getValue()));
+                const code = new Function(transpile(textEditorRef.current.getValue()));
                 code();
             } catch (error) {
                 console.error(error);

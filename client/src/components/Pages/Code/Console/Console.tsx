@@ -1,4 +1,3 @@
-import React from 'react'
 import './Console.css'
 
 type Props = {}

@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
-import ReactDom from 'react-dom'
-import * as icons from '@fortawesome/free-solid-svg-icons';
-import EventsService from '../../services/events';
+import { createPortal } from 'react-dom'
+import { faExclamationCircle, faX } from '@fortawesome/free-solid-svg-icons';
 import './Modal.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { createPortalElement } from '../../utils/createPortalElement';
@@ -22,7 +21,7 @@ type Props = {
 export default function Modal(props: Props) {
     const modalRef = useRef<HTMLDivElement>(null);
     const overlayRef = useRef<HTMLDivElement>(null);
-    const [icon] = useState<IconProp>(props.icon ?? icons.faExclamationCircle)
+    const [icon] = useState<IconProp>(props.icon ?? faExclamationCircle)
     const [chosenOption, setChosenOption] = useState<string>('');
     const [showXButton] = useState(props.showXButton ?? true);
     const [options] = useState<string[]>(() => {
@@ -49,7 +48,7 @@ export default function Modal(props: Props) {
     }
 
     const animationDurationStyle = { "--duration": ".3s" } as any;
-    return ReactDom.createPortal(
+    return createPortal(
         <div id='modal__container'>
             <div className="overlay-modal fade-in" style={animationDurationStyle} ref={overlayRef}></div>
             <div className="modal appear" style={animationDurationStyle} ref={modalRef} onAnimationEnd={e => {
@@ -61,7 +60,7 @@ export default function Modal(props: Props) {
                 }
             }}>
                 {
-                    showXButton && <FontAwesomeIcon className='xButton' icon={icons.faX} onClick={ToggleAnimations}></FontAwesomeIcon>
+                    showXButton && <FontAwesomeIcon className='xButton' icon={faX} onClick={ToggleAnimations}></FontAwesomeIcon>
                 }
                 <FontAwesomeIcon icon={icon} className="warning-icon" />
 
