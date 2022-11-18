@@ -1,7 +1,7 @@
 import { useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import './MainWindow.css'
 import MultilevelMenus from '../../../MultiDropdown/MultilevelMenus/MultilevelMenu';
-import { config, menuItems } from '../../../../config';
+import config, { menuItems } from '../../../../config';
 import { getHeightBetweenNavbarAndScreenBottom, uuidv4 } from '../../../../utils/utils';
 import { MenuItem } from '../../../../MenuItem';
 import { transpile } from 'typescript';

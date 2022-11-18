@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef } from 'react'
-import { config } from '../../../../../config';
+import config from '../../../../../config';
 import { IPasswordContext, PasswordContext } from '../PasswordComponent/Password'
 
 type Props = {}

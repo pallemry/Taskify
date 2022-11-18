@@ -4,7 +4,7 @@ import { IPasswordContext, PasswordContext } from '../PasswordComponent/Password
 import * as icons from '@fortawesome/free-solid-svg-icons';
 import './PasswordInputField.css'
 import { checkUppercase, checkLowercase, checkNumber } from '../../../../../utils/utils';
-import { config } from '../../../../../config';
+import config from '../../../../../config';
 
 type Props = {
   placeholder?: string;

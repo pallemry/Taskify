@@ -7,7 +7,7 @@ import Todos from '../Pages/Todos/MainComponent/Todos'
 import { AnimatePresence } from 'framer-motion'
 import Signup from '../Pages/Signup/Signup'
 import Home from '../Pages/Home/MainComponent/Home'
-import { config } from '../../config'
+import config from '../../config'
 import Test from '../Pages/Test/Test'
 import Code from '../Pages/Code/Code'
 

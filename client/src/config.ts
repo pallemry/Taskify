@@ -1,10 +1,11 @@
 import { MenuItem } from "./MenuItem";
 
-export const config = Object.freeze({
+const config = Object.freeze({
     url: 'http://localhost:3000',
     maxPasswordLength: 8,
     DEV: true,
     defaultFileContents: '// You are using taskify!\nconsole.log("Hello world");'
+
 });
 
 export const menuItems = Object.freeze<MenuItem[]>([
@@ -26,3 +27,5 @@ export const menuItems = Object.freeze<MenuItem[]>([
         id: 2
     }
 ])
+
+export default config;
