@@ -14,6 +14,7 @@ import { testExplorerItems } from '../../Test/Test';
 import { ConsoleContext } from '../ConsoleProvider/ConsoleProvider';
 import { Allotment } from 'allotment';
 import "allotment/dist/style.css";
+import { isFile } from '../../Explorer/Item';
 
 type Props = {}
 export default function MainWindow({ }: Props) {
@@ -130,9 +131,14 @@ export default function MainWindow({ }: Props) {
             <MultilevelMenus items={menuItems} itemSelected={itemSelected} />
             <div className="whitebg main-wrapper">
                 <Allotment>
-                    <Allotment.Pane snap preferredSize={window.innerWidth / 7 } minSize={window.innerWidth / 14 }>
+                    <Allotment.Pane snap preferredSize={window.innerWidth / 7} minSize={window.innerWidth / 14}>
                         <div id="explorer" className="maximize">
-                            <Explorer items={testExplorerItems} />
+                            <Explorer items={testExplorerItems} onClick={e => {
+                                const item = e.item;
+                                if (isFile(item)) {
+                                    setCurrentFileContents(item.fileContents)
+                                }
+                            }} />
                         </div>
                     </Allotment.Pane>
                     <Allotment.Pane>

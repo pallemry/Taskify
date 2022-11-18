@@ -4,7 +4,7 @@ import * as icons from '@fortawesome/free-solid-svg-icons';
 import { uuidv4 } from '../../../utils/utils';
 import { FolderOrFile, getReadableType, ReadableType, File as IFile, Folder as IFolder } from './Helper/ExpolerInterfaces'
 
-type ItemMouseEvent = React.MouseEvent & {
+export type ItemMouseEvent = React.MouseEvent & {
     item: FolderOrFile;
 }
 
