@@ -59,7 +59,7 @@ h1 {
     color: lime;
 }
 
-.login-form input[type]:not([type='submit']) {
+.login__input {
     width: 100%;
     font-size: .5em;
     font-family: inherit;
@@ -74,9 +74,14 @@ h1 {
     margin-bottom: 6px;
     transition: all .2s;
 }
-.login-form input[type]:not([type='submit']):focus-visible {
+.login__input:focus-visible {
     margin-bottom: 5px;
     border-bottom: 2px solid white;
+}
+
+.login__input[disabled] {
+    color: gray !important;
+    -webkit-text-fill-color: gray !important;
 }
 
 /* Change the white to any color */
@@ -85,7 +90,13 @@ input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
     -webkit-background-clip: text !important;
+}
+input:not([disabled]):-webkit-autofill,
+input:not([disabled]):-webkit-autofill:hover,
+input:not([disabled]):-webkit-autofill:focus,
+input:not([disabled]):-webkit-autofill:active {
     -webkit-text-fill-color: white !important;
+
 }
 
 .submit-wrapper {

@@ -24,12 +24,7 @@ export default function Modal(props: Props) {
     const [icon] = useState<IconProp>(props.icon ?? faExclamationCircle)
     const [chosenOption, setChosenOption] = useState<string>('');
     const [showXButton] = useState(props.showXButton ?? true);
-    const [options] = useState<string[]>(() => {
-        if (props.options && props.options.length > 0) {
-            return props.options;
-        }
-        return ["No", "Yes"];
-    });
+    const [options] = useState<string[]>(props.options ?? ["No", "Yes"]);
 
     useEffect(() => {
         let height = modalRef.current?.clientHeight || 0;

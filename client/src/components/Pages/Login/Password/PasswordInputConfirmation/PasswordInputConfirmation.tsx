@@ -5,7 +5,7 @@ import { IPasswordContext, PasswordContext } from '../PasswordComponent/Password
 type Props = {}
 
 export default function PasswordInputConfirmation({ }: Props) {
-    const { password, placeholder, passwordShown } = useContext(PasswordContext) as IPasswordContext;
+    const { disabled, password, placeholder, passwordShown } = useContext(PasswordContext) as IPasswordContext;
     const ref = useRef<HTMLInputElement>(null)
 
     function checkPassword(e: React.ChangeEvent<HTMLInputElement>) {
@@ -15,11 +15,12 @@ export default function PasswordInputConfirmation({ }: Props) {
     }
 
     return (
-        <input type={passwordShown ? "text" : "password"} name='password'
+        <input type={ passwordShown ? "text" : "password"} name='password'
             className={'login__input'}
             pattern={`(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d\\w\\W]{${config.maxPasswordLength},}`}
             placeholder={placeholder} required
             onChange={checkPassword}
+            disabled={disabled}
             ref={ref}
         ></input>
     )

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import config from '../../../../../config';
 import { PasswordCheckedErrors } from '../../PasswordErrors/PasswordErrors';
 import './Password.css'
@@ -10,6 +10,7 @@ type Props = React.PropsWithChildren & {
     errorActiveClassName?: string;
     errorDisabledClassName?: string;
     placeholder?: string;
+    disabled?: boolean;
     showErrorList?: boolean;
 }
 
@@ -21,7 +22,8 @@ export interface IPasswordContext {
     placeholder: string;
     setPlaceholder: React.Dispatch<React.SetStateAction<string>>;
     passwordShown: boolean;
-    setPasswordShown: React.Dispatch<React.SetStateAction<boolean>>
+    setPasswordShown: React.Dispatch<React.SetStateAction<boolean>>;
+    disabled: boolean;
 }
 
 export const PasswordContext = React.createContext<IPasswordContext | null>(null)
@@ -47,10 +49,13 @@ export default function Password(props: Props) {
             }
         });
     const [password, setPassword] = useState<string | null>(null);
-    const [placeholder, setPlaceholder] = useState<string>('');
+    const [placeholder, setPlaceholder] = useState<string>(props.placeholder ?? '');
     const [passwordShown, setPasswordShown] = useState<boolean>(false);
+    const disabled = useMemo(() => props.disabled ?? false, [props.disabled]);
+
     return (
         <PasswordContext.Provider value={{
+            disabled,
             passwordShown, setPasswordShown, 
             placeholder, setPlaceholder, 
             passwordErrors, setPasswordErrors, 

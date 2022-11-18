@@ -44,7 +44,7 @@ export default function Login({ }: Props) {
                     <div className="input-group">
                         <label htmlFor='password'> Password: </label>
                         <Password placeholder="j0hn">
-                            <PasswordInputField placeholder="j0hn" showPasswordButton={true}/>
+                            <PasswordInputField showPasswordButton={true}/>
                         </Password>
                     </div>
 
