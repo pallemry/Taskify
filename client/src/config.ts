@@ -7,7 +7,7 @@ export const config = Object.freeze({
     defaultFileContents: '// You are using taskify!\nconsole.log("Hello world");'
 });
 
-export const menuItems = Object.freeze<MenuItem>([
+export const menuItems = Object.freeze<MenuItem[]>([
     {
         title: 'File',
         id: 1,
