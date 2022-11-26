@@ -10,6 +10,7 @@ import Home from '../Pages/Home/MainComponent/Home'
 import config from '../../config'
 import Test from '../Pages/Test/Test'
 import Code from '../Pages/Code/Code'
+import UserProvider from '../User/UserProvider'
 
 type Props = {}
 
@@ -17,6 +18,7 @@ export default function AnimatedRoutes({ }: Props) {
     const location = useLocation();
 
     return (
+
         <AnimatePresence>
             <Routes location={location} key={location.pathname}>
                 <Route path={ROUTES.default} element={<Home />} />
@@ -25,10 +27,11 @@ export default function AnimatedRoutes({ }: Props) {
                 <Route path={ROUTES.any} element={<NotFound />} />
                 <Route path={ROUTES.signup} element={<Signup />} />
                 <Route path={ROUTES.code} element={<Code />} />
-                {config.DEV && 
-                <Route path={ROUTES.test} element={<Test />}/>
+                {config.DEV &&
+                    <Route path={ROUTES.test} element={<Test />} />
                 }
             </Routes>
         </AnimatePresence>
+
     )
 }

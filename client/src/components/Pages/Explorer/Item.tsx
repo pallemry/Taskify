@@ -1,8 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useEffect, useState } from 'react'
-import * as icons from '@fortawesome/free-solid-svg-icons';
-import { uuidv4 } from '../../../utils/utils';
+import React, { useContext, useEffect, useRef, useState } from 'react'
+import { faFolder, faFolderOpen } from '@fortawesome/free-solid-svg-icons';
+import { PreventDefault, uuidv4 } from '../../../utils/utils';
 import { FolderOrFile, getReadableType, ReadableType, File as IFile, Folder as IFolder } from './Helper/ExpolerInterfaces'
+import { ConsoleContext, IConsoleContext } from '../Code/ConsoleProvider/ConsoleProvider';
 
 export type ItemMouseEvent = React.MouseEvent & {
     item: FolderOrFile;
@@ -35,33 +36,48 @@ export function File(props: Props<IFile>) {
 
 
 export function Folder(props: Props<IFolder>) {
+    const { saveConsole } = useContext(ConsoleContext);
+
     const [subItems, setSubItems] = useState(props.item.subItems);
     const [folderOpen, setFolderOpen] = useState(false);
+
+    const onClickFolder = (e: React.MouseEvent<HTMLElement, MouseEvent>): void => {
+        props.onClick?.({ ...e, item: props.item });
+        setFolderOpen(prev => !prev);
+    };
+    // saveConsole.log("Rendering fold", folderOpen)
+
     return (
         <div className="folder">
-            <details open={folderOpen} onChange={() => {
-                return setFolderOpen(prev => !prev);
-            }} >
-                <summary onClick={(e) => props.onClick?.({ ...e, item: props.item })} className="f-name">
-                    <FontAwesomeIcon icon={folderOpen ? icons.faFolderOpen : icons.faFolder} style={{ marginRight: '5px' }} />
+            <details open={folderOpen}>
+                <summary
+                    onMouseDown={PreventDefault}
+                    onClick={PreventDefault}
+                    className="f-name">
+                    <div onClick={onClickFolder} className="folder-icon">
+                        <FontAwesomeIcon icon={folderOpen ? faFolderOpen : faFolder} style={{ marginRight: '5px' }} />
+                    </div>
                     {props.item.name}
                 </summary>
-                <ul className="items">
-                    {
-                        subItems.map(subItem => {
-                            return (
-                                <li key={subItem.id}>
-                                    {
-                                        isFile(subItem) ?
-                                            <File key={subItem.id} onClick={props.onClick} item={subItem} depth={(props.depth ?? 0) + 1} /> :
-                                            <Folder key={subItem.id} item={subItem} onClick={props.onClick} depth={(props.depth ?? 0) + 1} />
+                <div>
+
+                    <ul className="items">
+                        {
+                            subItems.map(subItem => {
+                                return (
+                                    <li key={subItem.id}>
+                                        {
+                                            isFile(subItem) ?
+                                                <File key={subItem.id} onClick={props.onClick} item={subItem} depth={(props.depth ?? 0) + 1} /> :
+                                                <Folder key={subItem.id} item={subItem} onClick={props.onClick} depth={(props.depth ?? 0) + 1} />
                                             // <div key={subItem.id}>{subItem.name}</div>
-                                    }
-                                </li>
-                            );
-                        })
-                    }
-                </ul>
+                                        }
+                                    </li>
+                                );
+                            })
+                        }
+                    </ul>
+                </div>
             </details>
         </div>
     )

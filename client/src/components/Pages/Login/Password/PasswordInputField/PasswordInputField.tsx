@@ -7,11 +7,11 @@ import { checkUppercase, checkLowercase, checkNumber } from '../../../../../util
 import config from '../../../../../config';
 
 type Props = {
-  showPasswordButton?: boolean;
+  showShowPasswordButton?: boolean;
   onChange?: (password: string) => void;
 }
 
-export default function PasswordInputField({ showPasswordButton, onChange }: Props) {
+export default function PasswordInputField({ showShowPasswordButton: showPasswordButton, onChange }: Props) {
   const { disabled, placeholder, passwordErrors, passwordShown, setPasswordErrors, setPassword, setPasswordShown } = useContext(PasswordContext) as IPasswordContext;
 
   function onChangePassword(e: React.ChangeEvent<HTMLInputElement>) {

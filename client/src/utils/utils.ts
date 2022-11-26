@@ -65,3 +65,7 @@ export function checkNumber(str: string): boolean {
 };
 
 export const uuidv4 = () => v4();
+
+export const PreventDefault = (e: {
+  preventDefault: () => void;
+}) => e.preventDefault();

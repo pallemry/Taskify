@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { uuidv4 } from '../../../utils/utils'
 import { FolderOrFile } from '../Explorer/Helper/ExpolerInterfaces'
 
@@ -19,6 +19,15 @@ export const testExplorerItems: FolderOrFile[] = [
         id: uuidv4(),
         name: 'x.js',
         fileContents: 'hello world from x'
+      }, 
+      {
+        id: uuidv4(),
+        name: 'open me',
+        subItems: [{
+          id: uuidv4(),
+          name: 'x.js',
+          fileContents: 'hello world from x'
+        }]
       }
     ],
     name: 'open ab',
@@ -27,7 +36,14 @@ export const testExplorerItems: FolderOrFile[] = [
 ]
 
 export default function Test({ }: Props) {
+  const [open, setOpen] = useState(false);
+
   return (
-    <div>Test</div>
+    <details>
+      <summary onClick={() => {
+        setOpen(!open)
+    }}>wow {open ? 'wow' : 'mah'}</summary>
+      dwadwadwa
+    </details>
   )
 }

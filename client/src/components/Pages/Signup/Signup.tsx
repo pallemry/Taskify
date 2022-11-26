@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import $ from 'jquery'
 import './Signup.css'
@@ -13,6 +13,7 @@ import config from '../../../config'
 import useApiUserCalls from '../../../hooks/useApiUserCalls'
 import Modal from '../../Modal/Modal'
 import useErrorModal from '../../../hooks/useErrorModal'
+import { IUserContext, UserContext } from '../../User/UserProvider'
 
 type Props = {}
 
@@ -26,6 +27,7 @@ export default function Signup({ }: Props) {
     const [loggedIn, setLoggedIn] = useState(false);
     const disabled = isLoading || error !== null;
     const navigate = useNavigate();
+    const userContext = useContext(UserContext);
 
     async function submitClick(e: React.MouseEvent<HTMLInputElement>) {
         e.preventDefault();
@@ -43,8 +45,13 @@ export default function Signup({ }: Props) {
 
         try {
             setIsLoading(true);
+            const user = { email, password };
             // Try to add the user to the database
-            await postUser({email, password});
+            await postUser(user);
+            // Save the current user if successful
+            if (userContext) {
+                userContext.setCurrentUser(user);
+            }
             // Redirect the user to the code page, so they can start working
             navigate(ROUTES.code);
         } catch (error) {
@@ -88,7 +95,7 @@ export default function Signup({ }: Props) {
                         <Password placeholder="j0hn" 
                         disabled={disabled}>
                             <PasswordInputField 
-                            showPasswordButton={true} 
+                            showShowPasswordButton={true} 
                             onChange={e => setPassword(e)}/>
                             <PasswordInputConfirmation />
                             <PasswordErrorList />

@@ -1,6 +1,17 @@
-.root {
+.root, .root .items {
     margin: 0;
-    padding-left: 10px;
+    padding: 0;
+    margin-left: 15px;
+}
+
+#explorer *:has(> .items) {
+    border-left: 2px solid;
+    border-left-color: #00000000;
+    transition: border-left-color .2s;
+}
+
+#explorer:hover *:has(> .items) {
+    border-left-color: rgba(185, 185, 185, 0.526);
 }
 
 .f-name {
@@ -9,6 +20,11 @@
 
 .folder li {
     display: block;
+}
+
+.folder-icon {
+    cursor: pointer;
+    display: inline;
 }
 
 summary.f-name {

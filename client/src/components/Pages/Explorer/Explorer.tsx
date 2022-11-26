@@ -11,12 +11,6 @@ type Props = {
 }
 // NOTE: DO NOT USE CONSOLE LOG ON EACH RENDER THIS WILL CAUSE AN INFNITE LOOP! INSTEAD USE saveConsole
 export default function Explorer({ items, onClick }: Props) {
-    const { saveConsole } = useContext(ConsoleContext)
-
-    useEffect(() => {
-        saveConsole.log('initialized')
-    }, [])
-
     return (
         <>
             <ul className="root">
