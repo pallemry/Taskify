@@ -39,8 +39,12 @@
     margin: 0;
 }
 
-#console li {
+.console {
     padding: 3px 0px 3px 5px;
+}
+
+.console:last-child:not(:nth-child(1)) {
+    border: none;
 }
 
 #explorer {

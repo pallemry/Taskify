@@ -15,15 +15,19 @@ import { ConsoleContext } from '../ConsoleProvider/ConsoleProvider';
 import { Allotment } from 'allotment';
 import "allotment/dist/style.css";
 import { isFile } from '../../Explorer/Item';
+import { IUserContext, UserContext } from '../../../User/UserProvider';
 
-type Props = {}
+type Props = {
+};
+
 export default function MainWindow({ }: Props) {
+    const { currentUser } = useContext(UserContext) as IUserContext;
     const textEditorRef = useRef<IMultilineTextarea>(null);
     const explorerRef = useRef<HTMLDivElement>(null);
     const consoleRef = useRef<HTMLUListElement>(null);
     const ref = useRef<HTMLDivElement>(null);
     const { saveConsole } = useContext(ConsoleContext);
-    const [currentFileContents, setCurrentFileContents] = useState(config.defaultFileContents);
+    const [currentFileContents, setCurrentFileContents] = useState<string>();
     const [consoleMessages, setConsoleMessages] = useState<IConsoleMessage[]>([]);
 
     function log(...args: any[]) {
@@ -52,7 +56,7 @@ export default function MainWindow({ }: Props) {
     }
 
     useEffect(() => {
-        textEditorRef.current?.setValue(currentFileContents)
+        textEditorRef.current?.setValue(currentFileContents || '')
     }, [currentFileContents]);
 
     useEffect(() => {
@@ -133,7 +137,14 @@ export default function MainWindow({ }: Props) {
                 <Allotment>
                     <Allotment.Pane snap preferredSize={window.innerWidth / 7} minSize={window.innerWidth / 14}>
                         <div id="explorer" className="maximize">
-                            <Explorer items={testExplorerItems} onClick={e => {
+                            <Explorer items={
+                                currentUser?.rootFolder || [{
+                                    fileContents: 
+                                    "// Welcome to taskify!\n" + 
+                                    "console.log('app!');",
+                                    name: "index.js"
+                                }]
+                            } onClick={e => {
                                 const item = e.item;
                                 if (isFile(item)) {
                                     setCurrentFileContents(item.fileContents)
