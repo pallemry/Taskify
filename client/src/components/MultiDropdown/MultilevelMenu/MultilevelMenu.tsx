@@ -47,8 +47,6 @@ export default function MultilevelMenu({ items, depthLevel, optionSelected }: Pr
   };
 
   function clickedOption(item: MenuItem) {
-    console.log("trying")
-    const x = 1;
     optionSelected?.(item);
   }
 

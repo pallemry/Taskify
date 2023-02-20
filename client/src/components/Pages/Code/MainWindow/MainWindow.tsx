@@ -104,14 +104,12 @@ export default function MainWindow({ }: Props) {
     })
 
     function itemSelected(item: MenuItem) {
-        const x = 1;
         if (item.id === 2) {
             run()
         }
 
         if (item.id === 12) {
-            alert("should download")
-            downloadFile("THIS IS NICE DATA", "hello.txt")
+            downloadFile(currentFileContents, "script.js")
         }
     }
 
