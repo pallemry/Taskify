@@ -16,6 +16,7 @@ import { Allotment } from 'allotment';
 import "allotment/dist/style.css";
 import { isFile } from '../../Explorer/Item';
 import { IUserContext, UserContext } from '../../../User/UserProvider';
+import { File } from '../../Explorer/Helper/ExpolerInterfaces';
 
 type Props = {
 };
@@ -28,6 +29,7 @@ export default function MainWindow({ }: Props) {
     const ref = useRef<HTMLDivElement>(null);
     const { saveConsole } = useContext(ConsoleContext);
     const [currentFileContents, setCurrentFileContents] = useState<string>(config.defaultText);
+    const [currentFile, setCurrentFile] = useState<File>();
     const [consoleMessages, setConsoleMessages] = useState<IConsoleMessage[]>([]);
 
     function log(...args: any[]) {
@@ -105,11 +107,24 @@ export default function MainWindow({ }: Props) {
 
     function itemSelected(item: MenuItem) {
         if (item.id === 2) {
-            run()
+            run();
+        }
+
+        if (item.id === 11) {
+            save();
         }
 
         if (item.id === 12) {
-            downloadFile(currentFileContents, "script.js")
+            downloadFile(currentFileContents, "script.txt")
+        }
+
+    }
+
+    function save() {
+        if (textEditorRef.current) {
+            setCurrentFileContents(textEditorRef.current.getValue())
+            if (currentFile)
+                currentFile.fileContents = textEditorRef.current.getValue();
         }
     }
 
@@ -118,6 +133,7 @@ export default function MainWindow({ }: Props) {
     }
 
     function run() {
+        save();
         if (textEditorRef.current) {
             try {
                 reset();
@@ -155,8 +171,9 @@ export default function MainWindow({ }: Props) {
                                 const item = e.item;
                                 if (isFile(item)) {
                                     setCurrentFileContents(item.fileContents)
+                                    setCurrentFile(item);
                                 }
-                            }} />
+                            }}/>
                         </div>
                     </Allotment.Pane>
                     <Allotment.Pane>
