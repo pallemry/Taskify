@@ -84,6 +84,7 @@ export default function MultilevelMenu({ items, depthLevel, optionSelected }: Pr
             depthLevel={depthLevel}
             submenus={items.submenu}
             dropdown={dropdown}
+            optionSelected={optionSelected}
           />
         </>
       ) : !items.url && items.submenu ? (
@@ -105,6 +106,7 @@ export default function MultilevelMenu({ items, depthLevel, optionSelected }: Pr
             depthLevel={depthLevel}
             submenus={items.submenu}
             dropdown={dropdown}
+            optionSelected={optionSelected}
           />
 
         </>
