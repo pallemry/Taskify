@@ -5,5 +5,6 @@ import firebaseConfig from './firebaseConfig';
 const app = initializeApp(firebaseConfig)
 const db = getFirestore(app)
 const User = collection(db, 'users');
+const allowAccessWithoutSid = true;
 
-export { db, User };
+export { db, User, allowAccessWithoutSid };

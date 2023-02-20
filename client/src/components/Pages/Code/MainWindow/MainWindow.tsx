@@ -137,14 +137,17 @@ export default function MainWindow({ }: Props) {
                 <Allotment>
                     <Allotment.Pane snap preferredSize={window.innerWidth / 7} minSize={window.innerWidth / 14}>
                         <div id="explorer" className="maximize">
-                            <Explorer items={
-                                currentUser?.rootFolder || [{
-                                    fileContents: 
-                                    "// Welcome to taskify!\n" + 
-                                    "console.log('app!');",
-                                    name: "index.js"
-                                }]
-                            } onClick={e => {
+                            <Explorer items=
+                            {
+                                testExplorerItems
+                                // currentUser?.rootFolder || [{
+                                //     fileContents: 
+                                //     "// Welcome to taskify!\n" + 
+                                //     "console.log('app!');",
+                                //     name: "index.js"
+                                // }]
+                            }
+                            onClick={e => {
                                 const item = e.item;
                                 if (isFile(item)) {
                                     setCurrentFileContents(item.fileContents)
