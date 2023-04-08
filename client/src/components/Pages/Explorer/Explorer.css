@@ -34,3 +34,17 @@ summary.f-name {
 details[open] > summary.f-name {
     list-style-type: '';
 }
+
+.add-button-folder {
+    width: fit-content;
+    display: inline;
+    float: right;
+    margin-right: 5px;
+    opacity: 0;
+    transition: .2s all;
+}
+
+.f-name:hover > .add-button-folder {
+    opacity: 1;
+    cursor: pointer;
+}
