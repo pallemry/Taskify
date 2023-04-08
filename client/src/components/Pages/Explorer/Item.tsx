@@ -4,6 +4,8 @@ import { faFolder, faFolderOpen } from '@fortawesome/free-solid-svg-icons';
 import { PreventDefault, uuidv4 } from '../../../utils/utils';
 import { FolderOrFile, getReadableType, ReadableType, File as IFile, Folder as IFolder } from './Helper/ExpolerInterfaces'
 import { ConsoleContext, IConsoleContext } from '../Code/ConsoleProvider/ConsoleProvider';
+import ReactModal from 'react-modal';
+import TextboxModal from './TextboxModal';
 
 export type ItemMouseEvent = React.MouseEvent & {
     item: FolderOrFile;
@@ -40,15 +42,25 @@ export function Folder(props: Props<IFolder>) {
 
     const [subItems, setSubItems] = useState(props.item.subItems);
     const [folderOpen, setFolderOpen] = useState(false);
+    const [isNewModalOpen, setIsNewModalOpen] = useState(false);
 
     const onClickFolder = (e: React.MouseEvent<HTMLElement, MouseEvent>): void => {
         props.onClick?.({ ...e, item: props.item });
         setFolderOpen(prev => !prev);
     };
+    function addButton(event: React.MouseEvent<HTMLDivElement, MouseEvent>): void { 
+        setSubItems([{
+            fileContents: 'add', name: 'add.js', id: uuidv4()
+        }, ...subItems])
+    }
+
     // saveConsole.log("Rendering fold", folderOpen)
 
     return (
         <div className="folder">
+            <TextboxModal isOpen={false} heading='Add a new file' >
+                
+            </TextboxModal>
             <details open={folderOpen}>
                 <summary
                     onMouseDown={PreventDefault}
@@ -58,6 +70,7 @@ export function Folder(props: Props<IFolder>) {
                         <FontAwesomeIcon icon={folderOpen ? faFolderOpen : faFolder} style={{ marginRight: '5px' }} />
                     </div>
                     {props.item.name}
+                    <div className='add-button-folder' onClick={addButton}>+</div>
                 </summary>
                 <div>
 

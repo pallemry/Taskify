@@ -4,6 +4,7 @@ import { Folder, isFolder, File, ItemMouseEvent } from './Item'
 import './Explorer.css'
 import { randomBool, uuidv4 } from '../../../utils/utils'
 import { ConsoleContext } from '../Code/ConsoleProvider/ConsoleProvider'
+import TextboxModal from './TextboxModal'
 
 type Props = {
     items: FolderOrFile[],
@@ -13,6 +14,9 @@ type Props = {
 export default function Explorer({ items, onClick }: Props) {
     return (
         <>
+        <TextboxModal isOpen={true} heading='Add a new Item'>
+
+        </TextboxModal>
             <ul className="root">
                 {
                     items.map(i => {

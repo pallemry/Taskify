@@ -46,7 +46,7 @@ export default function Modal(props: Props) {
     return createPortal(
         <div id='modal__container'>
             <div className="overlay-modal fade-in" style={animationDurationStyle} ref={overlayRef}></div>
-            <div className="modal appear" style={animationDurationStyle} ref={modalRef} onAnimationEnd={e => {
+            <div className="custom-modal appear" style={animationDurationStyle} ref={modalRef} onAnimationEnd={e => {
                 if (e.animationName === modalExitAnimationName) {
                     (document.getElementById('modal__container') as HTMLElement).style.display = 'none';
                     if (props.setIsOpen)
